@@ -24,15 +24,15 @@ namespace API.Controllers
 
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<ApiResponseDto<UserDto>>> Register(RegisterDto registerDto)
         {
 
-            if (await UserExit(registerDto.Username)) return BadRequest("User Already exist");
+            if (await UserExit(registerDto.Email)) return BadRequest("User Already exist");
             using var hmac = new HMACSHA512();
 
             var user = new AppUser
             {
-                UserName = registerDto.Username,
+                Email = registerDto.Email,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
             };
@@ -41,17 +41,22 @@ namespace API.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return new UserDto
+            return new ApiResponseDto<UserDto>
             {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user),
+                Status = true,
+                Message = "Register successfully",
+                Data = new UserDto
+                {
+                    Email = user.Email,
+                    Token = _tokenService.CreateToken(user),
+                }
             };
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<ApiResponseDto<UserDto>>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == loginDto.Username.ToLower());
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == loginDto.Email.ToLower());
             if (user == null) return Unauthorized();
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
@@ -61,17 +66,24 @@ namespace API.Controllers
             if (!StructuralComparisons.StructuralEqualityComparer.Equals(computeHash, user.PasswordHash))
                 return Unauthorized();
 
-            return new UserDto
+            return
+            new ApiResponseDto<UserDto>
             {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user),
+                Status = true,
+                Message = "Logged in successfully",
+                Data = new UserDto
+                {
+                    Email = user.Email,
+                    Token = _tokenService.CreateToken(user),
+                }
             };
+
 
         }
 
         Task<bool> UserExit(string username)
         {
-            return _context.Users.AnyAsync(user => user.UserName == username.ToLower());
+            return _context.Users.AnyAsync(user => user.Email == username.ToLower());
         }
     }
 
