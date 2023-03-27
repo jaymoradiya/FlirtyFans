@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 import { User } from './models/user.model';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,13 @@ export class AppComponent implements OnInit {
   title = 'client';
   users: User[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe({
-      next: (res) => (this.users = res),
-    });
+    this.autoLogin();
+  }
+
+  autoLogin() {
+    this.authService.autoLogin();
   }
 }

@@ -12,6 +12,8 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
 import { ThemeBtnComponent } from './shared/components/theme-btn/theme-btn.component';
 import { LogInterceptor } from './shared/interceptor/log.interceptor';
+import { ProfileComponent } from './components/profile/profile.component';
+import { HomeComponent } from './components/home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +21,8 @@ import { LogInterceptor } from './shared/interceptor/log.interceptor';
     AuthComponent,
     LoaderComponent,
     ThemeBtnComponent,
+    ProfileComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
