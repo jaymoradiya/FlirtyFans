@@ -26,7 +26,7 @@ export class LogInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.authService.user.pipe(
+    return this.authService.userSubject.pipe(
       take(1),
       exhaustMap((res) => {
         let newRequest;

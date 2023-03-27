@@ -14,6 +14,7 @@ import { ApiResponse } from 'src/app/models/api-response.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserAuthModel } from 'src/app/models/user-auth.model';
+import { ToastrService } from 'ngx-toastr';
 
 type validator = { error: boolean | undefined; message: string };
 @Component({
@@ -55,7 +56,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -90,13 +92,14 @@ export class AuthComponent implements OnInit, OnDestroy {
       (res) => {
         this.response = res;
         this.isLoading = false;
-        console.log(this.response);
-        // this.router.navigate(['profile']);
+        this.router.navigate(['profile']);
+        this.showMessage();
       },
       (err) => {
         console.log('error occurred!!');
         this.isLoading = false;
         this.response = err;
+        this.showMessage();
       },
       null
     );
@@ -182,21 +185,15 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.pageInfo.subtitle_suffix = 'with your account';
         this.pageInfo.linkText = 'login ';
         break;
-
       default:
         break;
     }
   }
 
-  messageClasses(res: ApiResponse<User>) {
-    return {
-      error: !res?.message,
-      success: res?.status,
-      visible: res,
-    };
-  }
-
-  closeMessage() {
-    this.response = undefined;
+  showMessage() {
+    this.toaster.clear();
+    if (this.response?.status === true)
+      this.toaster.success(this.response?.message, undefined);
+    else this.toaster.error(this.response?.message, 'Error!');
   }
 }

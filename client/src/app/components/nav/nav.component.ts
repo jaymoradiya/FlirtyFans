@@ -11,7 +11,7 @@ export class NavComponent {
   isLoggedIn = false;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.authService.user.subscribe({
+    this.authService.userSubject.subscribe({
       next: (user) => {
         this.isLoggedIn = !!user;
       },

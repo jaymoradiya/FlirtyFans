@@ -14,6 +14,12 @@ import { ThemeBtnComponent } from './shared/components/theme-btn/theme-btn.compo
 import { LogInterceptor } from './shared/interceptor/log.interceptor';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
+import { MemberListComponent } from './components/member-list/member-list.component';
+import { MemberDetailsComponent } from './components/member-details/member-details.component';
+import { ListsComponent } from './components/lists/lists.component';
+import { MessagesComponent } from './components/messages/messages.component';
+import { ToastrModule } from 'ngx-toastr';
+import { SharedModule } from './shared/modules/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,14 +29,18 @@ import { HomeComponent } from './components/home/home.component';
     ThemeBtnComponent,
     ProfileComponent,
     HomeComponent,
+    MemberListComponent,
+    MemberDetailsComponent,
+    ListsComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BsDropdownModule.forRoot(),
     FormsModule,
+    SharedModule,
   ],
   providers: [
     {

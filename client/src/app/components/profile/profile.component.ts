@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProfileComponent {
   constructor(private authService: AuthService) {
-    this.authService.user.subscribe({
+    this.authService.userSubject.subscribe({
       next: (user) => {
         console.log(user);
       },

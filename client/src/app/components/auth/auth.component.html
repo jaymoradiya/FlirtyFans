@@ -17,10 +17,7 @@
       <a (click)="changeAuthAndNavigate(AuthTypes.signup)" class="nav-item"
         [ngClass]="{active: authType !== AuthTypes.login}">Sign up</a>
     </div>
-    <div class="response-card" [ngClass]="messageClasses(response)" *ngIf="response">
-      {{ response.message}}
-      <span class="close-btn" (click)="closeMessage()">x</span>
-    </div>
+
     <ng-container [ngSwitch]="authType">
       <ng-container *ngSwitchCase="AuthTypes.login" [ngTemplateOutlet]="login"></ng-container>
       <ng-container *ngSwitchCase="AuthTypes.signup" [ngTemplateOutlet]="signup"></ng-container>

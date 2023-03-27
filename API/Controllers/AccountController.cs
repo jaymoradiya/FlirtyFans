@@ -61,8 +61,7 @@ namespace API.Controllers
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            System.Console.WriteLine(computeHash);
-            System.Console.WriteLine(loginDto.Password);
+
             if (!StructuralComparisons.StructuralEqualityComparer.Equals(computeHash, user.PasswordHash))
                 return Unauthorized();
 
