@@ -1,0 +1,123 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="container">
+  <div class="page-title-wrapper">
+    <div class="page-title">{{ pageInfo.title}} </div>
+    <div class="page-info">{{ pageInfo.subtitle_prefix}}
+      <a (click)="changeAuthAndNavigate(authType === AuthTypes.login ? 'signup' : 'login')" class="link">
+        {{pageInfo.linkText }}
+      </a>
+      {{ pageInfo.subtitle_suffix}}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="nav-card-tabs" *ngIf="authType !== AuthTypes.resetPass">
+      <a (click)="changeAuthAndNavigate(AuthTypes.login)" class="nav-item"
+        [ngClass]="{active: authType === AuthTypes.login}">Login</a>
+      <a (click)="changeAuthAndNavigate(AuthTypes.signup)" class="nav-item"
+        [ngClass]="{active: authType !== AuthTypes.login}">Sign up</a>
+    </div>
+    <div class="response-card" [ngClass]="messageClasses(response)" *ngIf="response">
+      {{ response.message}}
+      <span class="close-btn" (click)="closeMessage()">x</span>
+    </div>
+    <ng-container [ngSwitch]="authType">
+      <ng-container *ngSwitchCase="AuthTypes.login" [ngTemplateOutlet]="login"></ng-container>
+      <ng-container *ngSwitchCase="AuthTypes.signup" [ngTemplateOutlet]="signup"></ng-container>
+      <ng-container *ngSwitchCase="AuthTypes.resetPass" [ngTemplateOutlet]="resetPass"></ng-container>
+      <ng-container *ngSwitchDefault [ngTemplateOutlet]="signup"></ng-container>
+    </ng-container>
+  </div>
+  <div class="forgot-pass-btn" *ngIf="authType.toString() === 'login'">
+    <a (click)="changeAuthAndNavigate(AuthTypes.resetPass)" class="link">Forgot your password?</a>
+  </div>
+</div>
+
+
+<ng-template #login>
+  <form class="card-body" #authForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="input-group">
+      <label for="email" class="input-field-label">Email</label>
+      <input type="text" name="email" placeholder="Email" class="input-field" ngModel email required />
+      <div class="error-text" *ngIf="emailValidate().error">
+        {{emailValidate().message}}
+      </div>
+    </div>
+    <div class="input-group">
+      <label for="password" class="input-field-label">Password</label>
+      <input type="password" name="password" placeholder="Password" class="input-field" ngModel required
+        minlength="6" />
+      <div class="error-text" *ngIf="passValidate().error">
+        {{passValidate().message}}
+      </div>
+    </div>
+    <div class="input-group">
+      <input type="checkbox" name="rememberMe" ngModel class="input-checkbox" />
+      <label for="rememberMe" class="input-checkbox-label">Remember me</label>
+    </div>
+    <!-- <input type="submit" value="Log in" class="btn"> -->
+    <app-theme-btn type="submit" value="Log in"></app-theme-btn>
+
+    <div class="login-info">
+      <p>This form is protected by hCaptcha and its <a href="#" class="link">Privacy Policy</a> and <a href="#"
+          class="link">Terms of Service</a> apply.</p>
+    </div>
+  </form>
+</ng-template>
+
+
+<ng-template #signup>
+  <form class="card-body" #authForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="input-group">
+      <label for="email" class="input-field-label">Email</label>
+      <input type="text" name="email" placeholder="Email" class="input-field" ngModel #email="ngModel" email required />
+      <div class="error-text" *ngIf="emailValidate().error">
+        {{emailValidate().message}}
+      </div>
+    </div>
+    <div class="input-group">
+      <label for="password" class="input-field-label">Password</label>
+      <input type="password" name="password" placeholder="Password" class="input-field" ngModel required
+        minlength="6" />
+      <div class="error-text" *ngIf="passValidate().error">
+        {{passValidate().message}}
+      </div>
+    </div>
+    <div class="input-group">
+      <label for="cPassword" class="input-field-label">Confirm Password</label>
+      <input type="password" name="cPassword" placeholder="Confirm Password" class="input-field" ngModel required
+        minlength="6" />
+      <div class="error-text" *ngIf="cPassValidate().error">
+        {{cPassValidate().message}}
+      </div>
+    </div>
+    <!-- <input type="submit" value="Sign up" class="btn"> -->
+    <app-theme-btn type="submit" value="Sign Up"></app-theme-btn>
+    <div class="login-info">
+      <p>This form is protected by hCaptcha and its <a href="#" class="link">Privacy Policy</a> and <a href="#"
+          class="link">Terms of Service</a> apply.</p>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #resetPass>
+  <form class="card-body" #authForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="input-group">
+      <label for="email" class="input-field-label">Email</label>
+      <input type="text" name="email" placeholder="Email" class="input-field" ngModel email required />
+      <div class="error-text" *ngIf="emailValidate().error">
+        {{emailValidate().message}}
+      </div>
+    </div>
+    <!-- <input type="submit" value="Reset Password" class="btn"> -->
+    <app-theme-btn type="submit" value="Reset Password"></app-theme-btn>
+
+    <div class="login-info">
+      <p>This form is protected by hCaptcha and its
+        <a href="#" class="link">Privacy Policy</a>
+        and
+        <a href="#" class="link">Terms of Service</a> apply.
+      </p>
+    </div>
+  </form>
+</ng-template>
