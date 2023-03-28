@@ -20,6 +20,9 @@ import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './shared/modules/shared.module';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
+import { ErrorInterceptor } from './shared/interceptor/error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +36,8 @@ import { SharedModule } from './shared/modules/shared.module';
     MemberDetailsComponent,
     ListsComponent,
     MessagesComponent,
+    NotFoundComponent,
+    ServerErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,11 @@ import { SharedModule } from './shared/modules/shared.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LogInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

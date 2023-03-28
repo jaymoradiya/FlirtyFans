@@ -83,7 +83,7 @@
     <div class="input-group">
       <label for="cPassword" class="input-field-label">Confirm Password</label>
       <input type="password" name="cPassword" placeholder="Confirm Password" class="input-field" ngModel required
-        minlength="6" />
+        minlength="6" [ngClass]="{'ng-invalid': !!cPassValidate().error}" />
       <div class="error-text" *ngIf="cPassValidate().error">
         {{cPassValidate().message}}
       </div>

@@ -93,13 +93,11 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.response = res;
         this.isLoading = false;
         this.router.navigate(['profile']);
-        this.showMessage();
       },
       (err) => {
         console.log('error occurred!!');
         this.isLoading = false;
         this.response = err;
-        this.showMessage();
       },
       null
     );
@@ -188,12 +186,5 @@ export class AuthComponent implements OnInit, OnDestroy {
       default:
         break;
     }
-  }
-
-  showMessage() {
-    this.toaster.clear();
-    if (this.response?.status === true)
-      this.toaster.success(this.response?.message, undefined);
-    else this.toaster.error(this.response?.message, 'Error!');
   }
 }
