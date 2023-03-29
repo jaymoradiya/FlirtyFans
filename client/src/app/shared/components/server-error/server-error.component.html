@@ -1,10 +1,15 @@
 <div class="container" style="text-align: center;">
-  <h4>Internal server error - refreshing the page will make the error disappear</h4>
+  <h4>Internal server 😓😓 - refreshing the page will make the error disappear</h4>
   <ng-container *ngIf="error">
     <h5 class="text-danger">Error: {{error['message']}}</h5>
-    <picture class="font-weight-bold">Note: If you are seeing this then it's server issue, we will be fix is soon
+    <picture class="font-weight-bold">Note: If you are seeing this,don't worry. it's server issue, we will be fix is
+      soon
     </picture>
     <p style="font-weight: bold;">Stack trace</p>
-    <code class="mt-5" style="background-color: whitesmoke;">{{error['details']}}</code>
+    <code class="mt-5" style="background-color: whitesmoke; text-align: left;">
+      <p>
+        {{error['data']}}
+      </p>
+    </code>
   </ng-container>
 </div>

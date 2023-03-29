@@ -28,9 +28,11 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/bootswatch/dist/lux/bootstrap.css",
               "src/styles.css",
+              "src/toastr.css",
               "node_modules/ngx-toastr/toastr.css",
-              "src/toastr.css"
+              "node_modules/ngx-spinner/animations/fire.css"
             ],
             "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
           },

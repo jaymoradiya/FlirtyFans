@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   api = environment.api;
-  userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(
-    null
-  );
+  private currentUser: BehaviorSubject<User | null> =
+    new BehaviorSubject<User | null>(null);
+  currentUser$ = this.currentUser.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -48,19 +48,19 @@ export class AuthService {
     const userString = localStorage.getItem('userData');
     if (!userString) return;
     const user = JSON.parse(userString);
-    this.router.navigate(['profile']);
-    this.userSubject.next(user);
+    // this.router.navigateByUrl('/members');
+    this.currentUser.next(user);
   }
 
   logout() {
     localStorage.removeItem('userData');
-    this.userSubject.next(null);
+    this.currentUser.next(null);
     this.router.navigate(['']);
   }
 
   handleAuthentication(res: ApiResponse<User>) {
     console.log('auth', res.data);
     localStorage.setItem('userData', JSON.stringify(res.data));
-    this.userSubject.next(res.data);
+    this.currentUser.next(res.data);
   }
 }

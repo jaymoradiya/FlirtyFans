@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HomeComponent {
   isLoggedIn = false;
   constructor(private authService: AuthService, private router: Router) {
-    this.authService.userSubject.subscribe({
+    this.authService.currentUser$.subscribe({
       next: (user) => (this.isLoggedIn = !!user),
     });
   }

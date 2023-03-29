@@ -11,6 +11,8 @@ import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { PreventUnsavedGuard } from './services/prevent-unsaved.guard';
 
 const routes: Routes = [
   {
@@ -21,12 +23,23 @@ const routes: Routes = [
   { path: 'auth', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: 'auth/:type', component: AuthComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'members', component: MemberListComponent },
-  { path: 'members/:id', component: MemberDetailsComponent },
-  { path: 'lists', component: ListsComponent },
-  { path: 'messages', component: MessagesComponent },
+  {
+    path: 'profile/edit',
+    component: ProfileEditComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [PreventUnsavedGuard],
+  },
+  { path: 'members', component: MemberListComponent, canActivate: [AuthGuard] },
+  {
+    path: 'member/:id',
+    component: MemberDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'lists', component: ListsComponent, canActivate: [AuthGuard] },
+  { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
+
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 

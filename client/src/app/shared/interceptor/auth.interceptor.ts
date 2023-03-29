@@ -19,20 +19,20 @@ import {
 import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable()
-export class LogInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.authService.userSubject.pipe(
+    return this.authService.currentUser$.pipe(
       take(1),
       exhaustMap((res) => {
         let newRequest;
         if (res) {
           newRequest = request.clone({
-            params: request.params.append(
+            headers: request.headers.append(
               'Authorization',
               'Bearer ' + res.token
             ),

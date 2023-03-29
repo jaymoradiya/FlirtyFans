@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Cryptography;
 using System.Text;
 using API.Data;
@@ -26,7 +27,12 @@ namespace API.Controllers
         public async Task<ActionResult<ApiResponseDto<UserDto>>> Register(RegisterDto registerDto)
         {
 
-            if (await UserExit(registerDto.Email)) return BadRequest("User Already exist");
+            if (await UserExit(registerDto.Email)) return BadRequest(new ApiResponseDto<string>
+            {
+                Data = null,
+                Status = false,
+                Message = "user Already exist",
+            });
             using var hmac = new HMACSHA512();
 
             var user = new AppUser
@@ -55,13 +61,23 @@ namespace API.Controllers
         public async Task<ActionResult<ApiResponseDto<UserDto>>> Login(LoginDto loginDto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == loginDto.Email.ToLower());
-            if (user == null) return Unauthorized();
+            if (user == null) return Unauthorized(new ApiResponseDto<string>
+            {
+                Data = null,
+                Status = false,
+                Message = "user doesn't exist",
+            });
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
             if (!StructuralComparisons.StructuralEqualityComparer.Equals(computeHash, user.PasswordHash))
-                return Unauthorized();
+                return Unauthorized(new ApiResponseDto<string>
+                {
+                    Data = null,
+                    Status = false,
+                    Message = "invalid email and password",
+                });
 
             return
             new ApiResponseDto<UserDto>
@@ -72,6 +88,7 @@ namespace API.Controllers
                 {
                     Email = user.Email,
                     Token = _tokenService.CreateToken(user),
+                    Id = user.Id,
                 }
             };
 

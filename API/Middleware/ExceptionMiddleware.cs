@@ -37,13 +37,12 @@ namespace API.Middleware
                     Status = false,
                     Message = "Internal Server Error",
                 }
-                :
-                 new ApiResponseDto<String>
-                 {
-                     Data = null,
-                     Status = false,
-                     Message = "Internal Server Error",
-                 };
+                : new ApiResponseDto<String>
+                {
+                    Data = null,
+                    Status = false,
+                    Message = "Internal Server Error",
+                };
 
                 // var options = new JsonSerializerOptions
                 // {

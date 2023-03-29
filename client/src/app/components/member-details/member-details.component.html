@@ -1,1 +1,56 @@
-<p>member-details works!</p>
+<div class="row" *ngIf="member">
+  <div class="col-4">
+    <div class="card">
+
+      <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+      <div class="card-body">
+
+        <div>
+          <strong>Location:</strong>
+          <p>{{member.city}}, {{member.country}}</p>
+        </div>
+        <div>
+          <strong>Age:</strong>
+          <p>{{member.age}}</p>
+        </div>
+        <div>
+          <strong>Last Active:</strong>
+          <p>{{member.lastActive | date }}</p>
+        </div>
+        <div>
+          <strong>Member since:</strong>
+          <p>{{member.created | date}}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary me-2">
+          <i class="fa fa-heart"></i>
+          &nbsp;
+          Like</button>
+        <button type="button" class="btn btn-success">
+          <i class="fa fa-envelope"></i>
+          &nbsp;
+          Message</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <tabset class="member-tabset">
+      <tab heading="About {{member.knownAs}}">
+        <h4 class="mt-2">Descriptions</h4>
+        <p>{{member.introduction}}</p>
+        <h4>Looking for</h4>
+        <p>{{member.lookingFor}}</p>
+      </tab>
+      <tab heading="Photos">
+        <gallery [items]="getGalleryItem()!" class="mt-2"></gallery>
+      </tab>
+      <tab heading="Interests">
+        <p class="mt-2">{{member.interests}}</p>
+      </tab>
+      <tab heading="Messages">
+        <p class="mt-2">Messages go here</p>
+      </tab>
+    </tabset>
+  </div>
+</div>

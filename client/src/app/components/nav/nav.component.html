@@ -1,12 +1,12 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Dating App</a>
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">FlirtFans</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isLoggedIn">
         <li class="nav-item">
           <a class="nav-link " aria-current="page" routerLink="/members" routerLinkActive="active">Members</a>
         </li>
@@ -18,12 +18,20 @@
         </li>
       </ul>
 
-      <form class="d-flex" role="search">
+      <!-- <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success me-2" type="submit">Search</button>
-      </form>
-      <button class="btn btn-outline-primary" type="submit" (click)="onAuth()">
-        {{isLoggedIn ? 'Logout' : 'Log In'}}</button>
+      </form> -->
+      <div *ngIf="isLoggedIn" dropdown class="btn-group" placement="bottom left">
+        <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none">Account<span class="caret"></span>
+        </a>
+        <div id="dropdown-animated" class="dropdown-menu dropdown-menu-left my-3" *dropdownMenu>
+          <a class="dropdown-item" routerLink="/profile/edit">Edit Profile</a>
+          <a class="dropdown-item" (click)="onAuth()">Logout</a>
+        </div>
+      </div>
+      <button class="btn btn-outline-primary ms-auto" type="button" *ngIf="!isLoggedIn" (click)="onAuth()">Log
+        In</button>
     </div>
   </div>
 </nav>

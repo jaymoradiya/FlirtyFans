@@ -41,11 +41,12 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               throw modelStateErrors;
             } else {
-              this.toastr.error(error.error, error.status.toString());
+              this.toastr.error(error.error.message);
             }
             break;
           case 401:
-            this.toastr.error('Unauthorised', error.status.toString());
+            console.log(error);
+            this.toastr.error(error.error.message);
             break;
           case 404:
             this.router.navigateByUrl('/not-found');
