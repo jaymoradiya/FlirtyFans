@@ -37,7 +37,7 @@ namespace API.Controllers
 
             var user = new AppUser
             {
-                Email = registerDto.Email,
+                Email = registerDto.Email.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
             };
@@ -53,7 +53,7 @@ namespace API.Controllers
                 Data = new UserDto
                 {
                     Id = user.Id,
-                    Email = user.Email,
+                    Email = user.Email.ToLower(),
                     KnownAs = user.KnownAs,
                     Token = _tokenService.CreateToken(user),
                 }
@@ -62,7 +62,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<ApiResponseDto<UserDto>>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == loginDto.Email.ToLower());
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email.ToLower() == loginDto.Email.ToLower());
             if (user == null) return Unauthorized(new ApiResponseDto<string>
             {
                 Data = null,
@@ -89,7 +89,7 @@ namespace API.Controllers
                 Data = new UserDto
                 {
                     Id = user.Id,
-                    Email = user.Email,
+                    Email = user.Email.ToLower(),
                     KnownAs = user.KnownAs,
                     Token = _tokenService.CreateToken(user),
                 }
@@ -98,9 +98,9 @@ namespace API.Controllers
 
         }
 
-        Task<bool> UserExit(string username)
+        Task<bool> UserExit(string email)
         {
-            return _context.Users.AnyAsync(user => user.Email == username.ToLower());
+            return _context.Users.AnyAsync(user => user.Email.ToLower() == email.ToLower());
         }
     }
 

@@ -1,6 +1,6 @@
 <div class="card mb-4" *ngIf="member">
   <div class="card-img-wrapper">
-    <img src="{{member.photoUrl}}" alt="{{member.knownAs}}" class="card-img-top">
+    <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top">
     <ul class="list-inline member-icons animate text-center">
       <li class="list-inline-item">
         <button routerLink="/member/{{member.id}}" class="btn btn-outline-primary btn-sm"
@@ -12,16 +12,15 @@
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i
             class="fa fa-heart"></i></button>
       <li class="list-inline-item">
-        <button class="btn btn-outline-primary "><i class="fa fa-envelope"></i></button>
+        <button class="btn btn-outline-primary btn-sm"
+          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i
+            class="fa fa-envelope"></i></button>
     </ul>
   </div>
   <div class="card-body p-1">
-    <div class="text-center">
-      <i class="fa fa-user me-2"></i>
-    </div>
     <h6 class="card-title text-center mb-1 overflow-hidden">
-      {{member.knownAs}}
+      {{member.knownAs || "USER" }}
     </h6>
-    <p class="card-text text-muted text-center">{{member.city}}</p>
+    <p class="card-text text-muted text-center">{{member.city || "City" }}</p>
   </div>
 </div>
