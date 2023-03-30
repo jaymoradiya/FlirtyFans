@@ -3,6 +3,7 @@ using API.Data;
 using API.Interfaces;
 using API.Services;
 using AutoMapper;
+using API.Helpers;
 
 namespace API.Extensions
 {
@@ -20,6 +21,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             return services;
 
         }

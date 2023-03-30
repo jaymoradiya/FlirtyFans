@@ -23,8 +23,8 @@
         <button class="btn btn-outline-success me-2" type="submit">Search</button>
       </form> -->
       <div *ngIf="isLoggedIn" dropdown class="btn-group" placement="bottom left">
-        <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none">Welcome {{user?.knownAs}}<span
-            class="caret"></span>
+        <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none" style="cursor: pointer;">Welcome
+          {{user?.knownAs}}<span class="caret"></span>
         </a>
         <div id="dropdown-animated" class="dropdown-menu dropdown-menu-left my-3" *dropdownMenu>
           <a class="dropdown-item" routerLink="/profile/edit">Edit Profile</a>

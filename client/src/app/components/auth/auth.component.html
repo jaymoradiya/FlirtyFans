@@ -1,13 +1,14 @@
 <div class="container">
   <div class="page-title-wrapper">
     <div class="page-title">{{ pageInfo.title}} </div>
-    <div class="page-info">{{ pageInfo.subtitle_prefix}}
+    <div class="page-info">{{ pageInfo.subtitle_suffix}}
       <a (click)="changeAuthAndNavigate(authType === AuthTypes.login ? 'signup' : 'login')" class="link">
         {{pageInfo.linkText }}
       </a>
       {{ pageInfo.subtitle_suffix}}
     </div>
   </div>
+
 
   <div class="card">
     <div class="nav-card-tabs" *ngIf="authType !== AuthTypes.resetPass">

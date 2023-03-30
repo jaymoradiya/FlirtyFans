@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ServerErrorComponent {
   error: { [k: string]: any } | null = null;
+
   constructor(private router: Router) {
     this.error = this.router.getCurrentNavigation()?.extras?.state?.['error'];
   }
