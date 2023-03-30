@@ -2,3 +2,4 @@
 .vs
 obj
 bin
+API/appsettings.json
