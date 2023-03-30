@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">FlirtFans</a>
+    <a class="navbar-brand" routerLink="/">FLIRTY FANS</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,8 @@
         <button class="btn btn-outline-success me-2" type="submit">Search</button>
       </form> -->
       <div *ngIf="isLoggedIn" dropdown class="btn-group" placement="bottom left">
-        <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none">Account<span class="caret"></span>
+        <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none">Welcome {{user?.knownAs}}<span
+            class="caret"></span>
         </a>
         <div id="dropdown-animated" class="dropdown-menu dropdown-menu-left my-3" *dropdownMenu>
           <a class="dropdown-item" routerLink="/profile/edit">Edit Profile</a>

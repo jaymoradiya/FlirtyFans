@@ -52,7 +52,9 @@ namespace API.Controllers
                 Message = "Register successfully",
                 Data = new UserDto
                 {
+                    Id = user.Id,
                     Email = user.Email,
+                    KnownAs = user.KnownAs,
                     Token = _tokenService.CreateToken(user),
                 }
             };
@@ -86,9 +88,10 @@ namespace API.Controllers
                 Message = "Logged in successfully",
                 Data = new UserDto
                 {
-                    Email = user.Email,
-                    Token = _tokenService.CreateToken(user),
                     Id = user.Id,
+                    Email = user.Email,
+                    KnownAs = user.KnownAs,
+                    Token = _tokenService.CreateToken(user),
                 }
             };
 

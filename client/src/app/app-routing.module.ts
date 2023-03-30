@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './components/auth/auth.component';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
@@ -12,7 +12,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
-import { PreventUnsavedGuard } from './services/prevent-unsaved.guard';
+import { PreventUnsavedGuard } from './guards/prevent-unsaved.guard';
 
 const routes: Routes = [
   {

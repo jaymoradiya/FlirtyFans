@@ -39,8 +39,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   responseOb: Observable<ApiResponse<User> | null> | undefined;
   responseSub: Subscription | undefined;
 
-  isLoading = false;
-
   pageInfo: {
     title: string;
     subtitle_prefix: string;
@@ -74,7 +72,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (!this.authForm?.valid) return;
-    this.isLoading = true;
     const user: UserAuthModel = this.authForm?.form.value;
     switch (this.authType) {
       case AuthType.login:
@@ -91,12 +88,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.responseSub = this.responseOb?.subscribe(
       (res) => {
         this.response = res;
-        this.isLoading = false;
         this.router.navigate(['members']);
       },
       (err) => {
         console.log('error occurred!!');
-        this.isLoading = false;
         this.response = err;
       },
       null
