@@ -1,0 +1,17 @@
+<div class="row m-0  px-1" *ngIf="member">
+  <img [src]="member.photoUrl" [alt]="member.knownAs" class="p-0 rounded d-inline" style="width: 50px;">
+  <p class="col-{{ isLikeType ? '7' : '5' }} text-left pt-1 my-auto d-inline">
+    <strong class="text-truncate">{{member.knownAs}}</strong>
+    <span class="d-block text-muted text-truncate">{{member.city}}</span>
+  </p>
+  <button class="btn btn-outline-primary btn-sm my-auto ms-auto"
+    style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; text-align: center; width: 2rem;"
+    *ngIf="isLikeType">
+    <i class="fa fa-heart"></i>
+  </button>
+  <button class="btn btn-primary btn-sm my-auto ms-auto"
+    style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;  width: 3.5rem;"
+    *ngIf="!isLikeType">
+    Accept
+  </button>
+</div>

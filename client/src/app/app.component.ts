@@ -10,9 +10,13 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'client';
-  users: User[] = [];
+  isLoggedIn = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    authService.currentUser$.subscribe({
+      next: (u) => (this.isLoggedIn = !!u),
+    });
+  }
 
   ngOnInit(): void {
     this.autoLogin();

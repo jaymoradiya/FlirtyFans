@@ -3,4 +3,7 @@ export const environment = {
   api: {
     baseUrl: '/api',
   },
+  string: {
+    appName: 'Flirty Fans',
+  },
 };

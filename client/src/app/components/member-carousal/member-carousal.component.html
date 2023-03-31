@@ -1,0 +1,18 @@
+<div id="carouselExampleCaptions" class="carousel carousel-dark slide card col-12 px-4 py-3">
+  <div class="carousel-inner">
+    <div class="carousel-item {{ i == 0 ? 'active' : '' }}" *ngFor="let member of carousalMembers; index as i">
+      <div class="row text-dark">
+        <app-member-card class="col-3" [member]="members[i*4]"></app-member-card>
+        <app-member-card class="col-3" [member]="members[i*4+1]"></app-member-card>
+        <app-member-card class="col-3" [member]="members[i*4+2]"></app-member-card>
+        <app-member-card class="col-3" [member]="members[i*4+3]"></app-member-card>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control prev" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <i class="fa fa-angle-left"></i>
+  </button>
+  <button type="button" class="carousel-control next" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <i class="fa fa-angle-right"></i>
+  </button>
+</div>

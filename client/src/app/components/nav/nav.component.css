@@ -1,0 +1,23 @@
+.user-profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: inline;
+}
+
+.nav-link {
+  color: #A9A9A9;
+  font-weight: 500;
+}
+
+.nav-link.nav-active {
+  color: #F11D40;
+  transition: all 0.3s ease-in-out;
+}
+
+.contact-up-menu {
+  background-color: #F4F2FD;
+  border: none;
+
+}

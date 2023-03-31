@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  background-color: #F4F2FD;
+}
+
+.btn {
+  text-transform: none;
+  letter-spacing: .15ch;
+  font-weight: 400;
+}

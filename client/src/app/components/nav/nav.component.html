@@ -1,38 +1,98 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">FLIRTY FANS</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isLoggedIn">
-        <li class="nav-item">
-          <a class="nav-link " aria-current="page" routerLink="/members" routerLinkActive="active">Members</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " aria-current="page" routerLink="/lists" routerLinkActive="active">Lists</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " aria-current="page" routerLink="/messages" routerLinkActive="active">Messages</a>
-        </li>
-      </ul>
+<ng-container *ngIf="isLoggedIn; then loggedInNav; else loggedOutNav">
+</ng-container>
 
-      <!-- <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success me-2" type="submit">Search</button>
-      </form> -->
-      <div *ngIf="isLoggedIn" dropdown class="btn-group" placement="bottom left">
-        <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none" style="cursor: pointer;">Welcome
-          {{user?.knownAs}}<span class="caret"></span>
-        </a>
-        <div id="dropdown-animated" class="dropdown-menu dropdown-menu-left my-3" *dropdownMenu>
-          <a class="dropdown-item" routerLink="/profile/edit">Edit Profile</a>
-          <a class="dropdown-item" (click)="onAuth()">Logout</a>
-        </div>
+
+<ng-template #loggedOutNav>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/">FLIRTY FANS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link " href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#whyUs">Why Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact Us</a>
+          </li>
+        </ul>
+
+        <button class="btn btn-outline-primary" type="button" (click)="onAuth()"
+          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: .75rem;">Log
+          In</button>
       </div>
-      <button class="btn btn-outline-primary ms-auto" type="button" *ngIf="!isLoggedIn" (click)="onAuth()">Log
-        In</button>
+    </div>
+  </nav>
+</ng-template>
+
+<ng-template #loggedInNav>
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; height: 100vh">
+    <div class="text-center mt-2">
+      <div class="my-4 mb-md-4 me-md-auto">
+        <a href="/" class="link-dark text-decoration-none">
+          <span class="fs-3 fw-bolder">FLIRTY FANS</span>
+        </a>
+      </div>
+      <img [src]="user?.photoUrl" alt="" width="75" height="75" class="rounded-circle mb-2">
+      <p>
+        <strong>Welcome {{user?.knownAs}}</strong>
+      </p>
+      <a href="#" class="fs-6 text-muted text-decoration-none" routerLink="/profile/edit">
+        Edit Profile
+      </a>
+
+    </div>
+    <hr>
+    <div class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link" routerLink="/members" routerLinkActive="nav-active" aria-current="page">
+          <i class="fa fa-home me-2 mb-2" width="24" height="24"></i>
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link " routerLink="/lists" routerLinkActive="nav-active">
+          <i class="fa fa-list-ul me-2 mb-2" width="24" height="24"></i>
+          List
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link" routerLink="/messages" routerLinkActive="nav-active">
+          <i class="fa fa-comment-dots me-2 mb-2" width="24" height="24"></i>
+          Messages
+        </a>
+      </li>
+      <div class="card text-center p-4 contact-up-menu">
+        <div class="fs-5 fw-bold">Need our help?</div>
+        <button type="button" class="btn btn-primary btn-sm mt-3"
+          style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: .75rem;">
+          Contact Us</button>
+      </div>
+
+    </div>
+    <hr>
+    <div class="nav nav-pills flex-column">
+      <div class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-circle-question me-2 mb-2" width="24" height="24"></i>
+          Help
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" (click)="onAuth()">
+          <i class="fa fa-right-from-bracket me-2 mb-2" width="24" height="24"></i>
+          Sign out
+        </a>
+      </div>
     </div>
   </div>
-</nav>
+</ng-template>

@@ -27,6 +27,8 @@ import { MemberCardComponent } from './shared/components/member-card/member-card
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { LoadingInterceptor } from './shared/interceptor/loading.interceptor';
 import { PhotoEditComponent } from './components/photo-edit/photo-edit.component';
+import { MemberListItemComponent } from './components/member-list-item/member-list-item.component';
+import { MemberCarousalComponent } from './components/member-carousal/member-carousal.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { PhotoEditComponent } from './components/photo-edit/photo-edit.component
     MemberCardComponent,
     ProfileEditComponent,
     PhotoEditComponent,
+    MemberListItemComponent,
+    MemberCarousalComponent,
   ],
   imports: [
     BrowserModule,
