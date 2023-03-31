@@ -56,13 +56,16 @@ namespace API.Controllers
                     Email = user.Email.ToLower(),
                     KnownAs = user.KnownAs,
                     Token = _tokenService.CreateToken(user),
+                    PhotoUrl = user.Photos.SingleOrDefault(p => p.IsMain)?.Url,
                 }
             };
         }
         [HttpPost("login")]
         public async Task<ActionResult<ApiResponseDto<UserDto>>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email.ToLower() == loginDto.Email.ToLower());
+            var user = await _context.Users
+            .Include(u => u.Photos)
+            .SingleOrDefaultAsync(u => u.Email.ToLower() == loginDto.Email.ToLower());
             if (user == null) return Unauthorized(new ApiResponseDto<string>
             {
                 Data = null,
@@ -92,6 +95,7 @@ namespace API.Controllers
                     Email = user.Email.ToLower(),
                     KnownAs = user.KnownAs,
                     Token = _tokenService.CreateToken(user),
+                    PhotoUrl = user.Photos.SingleOrDefault(p => p.IsMain)?.Url,
                 }
             };
 

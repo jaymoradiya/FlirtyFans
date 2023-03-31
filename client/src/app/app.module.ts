@@ -26,6 +26,7 @@ import { ErrorInterceptor } from './shared/interceptor/error.interceptor';
 import { MemberCardComponent } from './shared/components/member-card/member-card.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { LoadingInterceptor } from './shared/interceptor/loading.interceptor';
+import { PhotoEditComponent } from './components/photo-edit/photo-edit.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { LoadingInterceptor } from './shared/interceptor/loading.interceptor';
     ServerErrorComponent,
     MemberCardComponent,
     ProfileEditComponent,
+    PhotoEditComponent,
   ],
   imports: [
     BrowserModule,

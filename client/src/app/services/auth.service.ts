@@ -60,7 +60,11 @@ export class AuthService {
 
   handleAuthentication(res: ApiResponse<User>) {
     console.log('auth', res.data);
-    localStorage.setItem('userData', JSON.stringify(res.data));
-    this.currentUser.next(res.data);
+    this.setCurrentUser(res.data);
+  }
+
+  setCurrentUser(user: User) {
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.currentUser.next(user);
   }
 }

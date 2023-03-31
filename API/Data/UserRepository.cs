@@ -23,7 +23,9 @@ namespace API.Data
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users
+            .Include(u => u.Photos)
+            .SingleOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<AppUser> GetUserByEmailAsync(string email)
