@@ -37,6 +37,7 @@ import { FileUploadModule } from 'ng2-file-upload';
   exports: [
     ToastrModule,
     BsDropdownModule,
+
     TabsModule,
     GalleryModule,
     NgxSpinnerModule,

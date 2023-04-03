@@ -18,6 +18,6 @@ body {
 
 .btn {
   text-transform: none;
-  letter-spacing: .15ch;
-  font-weight: 400;
+  letter-spacing: .05ch;
+  font-weight: 500;
 }

@@ -5,7 +5,7 @@
 <ng-template #loggedOutNav>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
-      <a class="navbar-brand" routerLink="/">FLIRTY FANS</a>
+      <a class="navbar-brand" routerLink="/">{{appName}}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
     <div class="text-center mt-2">
       <div class="my-4 mb-md-4 me-md-auto">
         <a href="/" class="link-dark text-decoration-none">
-          <span class="fs-3 fw-bolder">FLIRTY FANS</span>
+          <span class="fs-3 fw-bolder">{{appName}}</span>
         </a>
       </div>
       <img [src]="user?.photoUrl" alt="" width="75" height="75" class="rounded-circle mb-2">

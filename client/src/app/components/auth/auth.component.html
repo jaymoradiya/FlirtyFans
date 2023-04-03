@@ -10,7 +10,7 @@
   </div>
 
 
-  <div class="card">
+  <div class="card text-left">
     <div class="nav-card-tabs" *ngIf="authType !== AuthTypes.resetPass">
       <a (click)="changeAuthAndNavigate(AuthTypes.login)" class="nav-item"
         [ngClass]="{active: authType === AuthTypes.login}">Login</a>
@@ -33,27 +33,27 @@
 
 <ng-template #login>
   <form class="card-body" #authForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="input-group">
-      <label for="email" class="input-field-label">Email</label>
-      <input type="text" name="email" placeholder="Email" class="input-field" ngModel email required />
+    <div class="mb-3">
+      <label for="email" class="form-label fs-5">Email</label>
+      <input type="email" name="email" placeholder="Email" class="form-control mt-1" ngModel email required />
       <div class="error-text" *ngIf="emailValidate().error">
         {{emailValidate().message}}
       </div>
     </div>
-    <div class="input-group">
-      <label for="password" class="input-field-label">Password</label>
-      <input type="password" name="password" placeholder="Password" class="input-field" ngModel required
+    <div class="mb-3">
+      <label for="password" class="form-label fs-5">Password</label>
+      <input type="password" name="password" placeholder="Password" class="form-control mt-1" ngModel required
         minlength="6" />
       <div class="error-text" *ngIf="passValidate().error">
         {{passValidate().message}}
       </div>
     </div>
-    <div class="input-group">
-      <input type="checkbox" name="rememberMe" ngModel class="input-checkbox" />
-      <label for="rememberMe" class="input-checkbox-label">Remember me</label>
+    <div class="mb-3 input-group">
+      <input type="checkbox" name="rememberMe" ngModel class="form-check-input" />
+      <label for="rememberMe" class="form-label ms-2" for="checkbox">Remember me</label>
     </div>
     <!-- <input type="submit" value="Log in" class="btn"> -->
-    <app-theme-btn type="submit" value="Log in"></app-theme-btn>
+    <app-theme-btn type="submit" value="Log in" class="mx-auto"></app-theme-btn>
 
     <div class="login-info">
       <p>This form is protected by hCaptcha and its <a href="#" class="link">Privacy Policy</a> and <a href="#"
@@ -64,32 +64,33 @@
 
 
 <ng-template #signup>
-  <form class="card-body" #authForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="input-group">
-      <label for="email" class="input-field-label">Email</label>
-      <input type="text" name="email" placeholder="Email" class="input-field" ngModel #email="ngModel" email required />
+  <form class="card-body form" #authForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="email" class="form-label fs-5">Email</label>
+      <input type="email" name="email" placeholder="Email" class="form-control mt-1" ngModel #email="ngModel" email
+        required />
       <div class="error-text" *ngIf="emailValidate().error">
         {{emailValidate().message}}
       </div>
     </div>
-    <div class="input-group">
-      <label for="password" class="input-field-label">Password</label>
-      <input type="password" name="password" placeholder="Password" class="input-field" ngModel required
+    <div class="mb-3">
+      <label for="password" class="form-label fs-5">Password</label>
+      <input type="password" name="password" placeholder="Password" class="form-control mt-1" ngModel required
         minlength="6" />
       <div class="error-text" *ngIf="passValidate().error">
         {{passValidate().message}}
       </div>
     </div>
-    <div class="input-group">
-      <label for="cPassword" class="input-field-label">Confirm Password</label>
-      <input type="password" name="cPassword" placeholder="Confirm Password" class="input-field" ngModel required
+    <div class="mb-3">
+      <label for="cPassword" class="form-label fs-5">Confirm Password</label>
+      <input type="password" name="cPassword" placeholder="Confirm Password" class="form-control mt-1" ngModel required
         minlength="6" [ngClass]="{'ng-invalid': !!cPassValidate().error}" />
       <div class="error-text" *ngIf="cPassValidate().error">
         {{cPassValidate().message}}
       </div>
     </div>
     <!-- <input type="submit" value="Sign up" class="btn"> -->
-    <app-theme-btn type="submit" value="Sign Up"></app-theme-btn>
+    <app-theme-btn type="submit" value="Sign Up" class="mx-auto"></app-theme-btn>
     <div class="login-info">
       <p>This form is protected by hCaptcha and its <a href="#" class="link">Privacy Policy</a> and <a href="#"
           class="link">Terms of Service</a> apply.</p>
@@ -99,15 +100,15 @@
 
 <ng-template #resetPass>
   <form class="card-body" #authForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="input-group">
-      <label for="email" class="input-field-label">Email</label>
-      <input type="text" name="email" placeholder="Email" class="input-field" ngModel email required />
+    <div class="mb-3">
+      <label for="email" class="form-label fs-5">Email</label>
+      <input type="text" name="email" placeholder="Email" class="form-control mt-1" ngModel email required />
       <div class="error-text" *ngIf="emailValidate().error">
         {{emailValidate().message}}
       </div>
     </div>
     <!-- <input type="submit" value="Reset Password" class="btn"> -->
-    <app-theme-btn type="submit" value="Reset Password"></app-theme-btn>
+    <app-theme-btn type="submit" value="Reset Password" class="mx-auto"></app-theme-btn>
 
     <div class="login-info">
       <p>This form is protected by hCaptcha and its

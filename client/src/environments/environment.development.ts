@@ -4,6 +4,6 @@ export const environment = {
     baseUrl: 'https://localhost:5001/api/',
   },
   string: {
-    appName: 'Flirty Fans',
+    appName: 'Dating App',
   },
 };
