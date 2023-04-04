@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
 
   constructor(private authService: AuthService, private pageTitle: Title) {
-    this.pageTitle.setTitle(environment.string.appName);
+    // this.pageTitle.setTitle(environment.string.appName);
     authService.currentUser$.subscribe({
       next: (u) => (this.isLoggedIn = !!u),
     });

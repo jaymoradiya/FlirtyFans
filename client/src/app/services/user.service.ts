@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Member } from '../models/member.model';
 import { ApiResponse } from '../models/api-response.model';
+import { PaginationResult } from '../models/pagination.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +12,47 @@ import { ApiResponse } from '../models/api-response.model';
 export class UserService {
   BaseUrl = environment.api.baseUrl;
   members: Member[] = [];
+  paginationResult: PaginationResult<Member[]> = new PaginationResult<
+    Member[]
+  >();
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<ApiResponse<Member[]>> {
-    if (this.members.length > 0)
-      return of({
-        data: this.members,
-      } as ApiResponse<Member[]>);
-    return this.http.get<ApiResponse<Member[]>>(this.BaseUrl + 'users').pipe(
-      map((res) => {
-        this.members = res.data;
-        return res;
+  getUsers(
+    page: number = 1,
+    itemPerPage: number = 10
+  ): Observable<PaginationResult<Member[]> | null> {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', page);
+    params = params.append('pageSize', itemPerPage);
+
+    // if (this.members.length > 0)
+    //   return of({
+    //     data: this.members,
+    //   } as ApiResponse<Member[]>);
+
+    return this.http
+      .get<ApiResponse<Member[]>>(this.BaseUrl + 'users', {
+        observe: 'response',
+        params: params,
       })
-    );
+      .pipe(
+        // map((res) => {
+        //   this.members = res.data;
+        //   return res;
+        // })
+        map((res) => {
+          if (res.body) {
+            this.paginationResult.data = res.body.data;
+          }
+          const pagination = res.headers.get('Pagination');
+          if (pagination) {
+            this.paginationResult.pagination = JSON.parse(pagination);
+          }
+          return this.paginationResult;
+        })
+      );
   }
 
   getMember(id: number): Observable<ApiResponse<Member>> {

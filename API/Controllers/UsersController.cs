@@ -1,6 +1,7 @@
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using AutoMapper;
@@ -25,12 +26,17 @@ namespace API.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
 
-            return Ok(new ApiResponseDto<IEnumerable<MemberDto>>
+            var users = await _userRepository.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(userParams.PageNumber, userParams.PageSize, users.TotalPages, users.TotalCount));
+
+
+            return Ok(new ApiResponseDto<PagedList<MemberDto>>
             {
-                Data = await _userRepository.GetMembersAsync(),
+                Data = users,
                 Status = true,
                 Message = "Data fetch successfully"
             });

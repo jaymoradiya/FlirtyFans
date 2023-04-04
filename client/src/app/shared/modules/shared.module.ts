@@ -7,6 +7,7 @@ import { GALLERY_CONFIG, GalleryModule } from 'ng-gallery';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [],
@@ -22,6 +23,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       type: 'fire',
     }),
     FileUploadModule,
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
   ],
   providers: [
     {
@@ -38,11 +41,12 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
   exports: [
     ToastrModule,
     BsDropdownModule,
-
+    BsDatepickerModule,
     TabsModule,
     GalleryModule,
     NgxSpinnerModule,
     FileUploadModule,
+    PaginationModule,
   ],
 })
 export class SharedModule {}

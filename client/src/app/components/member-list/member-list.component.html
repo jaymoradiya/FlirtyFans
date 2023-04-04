@@ -11,7 +11,15 @@
         <button class="btn btn-outline-primary" type="button"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: .75rem;">Upgrade Now</button>
       </div>
-      <app-member-carousal [members]="members" class="col-12 p-0 m-0"></app-member-carousal>
+      <app-member-carousal [members]="members" class="col-12 p-0 m-0">
+        <div class="row" *ngIf="pagination">
+          <div class="col-xs-12 col-12">
+            <pagination [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemPerPage" [maxSize]="10"
+              [(ngModel)]="pagination.currentPage" (pageChanged)="onPageChange($event)"></pagination>
+          </div>
+        </div>
+      </app-member-carousal>
+
 
       <div class="mt-3 d-flex justify-content-between p-0">
 
