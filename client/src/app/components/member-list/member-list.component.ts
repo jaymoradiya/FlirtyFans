@@ -3,6 +3,7 @@ import { from, take } from 'rxjs';
 import { MemberListItemType } from 'src/app/models/enum/member-list-item.enum';
 import { Member } from 'src/app/models/member.model';
 import { Pagination } from 'src/app/models/pagination.model';
+import { User } from 'src/app/models/user.model';
 import { UserParams } from 'src/app/models/userparams.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -14,35 +15,34 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MemberListComponent implements OnInit {
   members: Member[] = [];
-  carousalMembers: number[] = [];
   mayLikeMembers: Member[] = [];
   chatRequests: Member[] = [];
   memberListType = MemberListItemType;
 
-  rotate = true;
-  maxSize = 5;
-  status = 'ON';
   pagination?: Pagination;
   userParams: UserParams | undefined;
+  genderList = [
+    {
+      value: 'male',
+      display: 'Males',
+    },
+    {
+      value: 'female',
+      display: 'Females',
+    },
+  ];
 
-  constructor(
-    private userService: UserService,
-    private authService: AuthService
-  ) {
-    this.authService.currentUser$.pipe(take(1)).subscribe({
-      next: (user) => {
-        if (user) {
-          this.userParams = new UserParams(user);
-        }
-      },
-    });
+  constructor(private userService: UserService) {
+    this.userParams = this.userService.getUserParams();
   }
+
   ngOnInit(): void {
     this.loadMembers();
   }
 
-  loadMembers() {
+  loadMembers(pageChange = false) {
     if (this.userParams) {
+      if (!pageChange) this.userParams.pageNumber = 1;
       this.userService.getUsers(this.userParams).subscribe({
         next: (res) => {
           if (!res) return;
@@ -51,21 +51,21 @@ export class MemberListComponent implements OnInit {
           this.chatRequests = [...res.data];
 
           this.pagination = res.pagination;
-          this.carousalMembers = Array.from(
-            {
-              length: 3,
-            },
-            (_, idx) => ++idx
-          );
+          console.log('pagination ', this.pagination);
         },
       });
     }
   }
 
+  resetFilters() {
+    this.userParams = this.userService.resetUserParams();
+  }
+
   onPageChange(event: any) {
     if (this.userParams && this.userParams.pageNumber !== event.page) {
       this.userParams.pageNumber = event.page;
-      this.loadMembers();
+      this.userService.setUserParams(this.userParams);
+      this.loadMembers(true);
     }
   }
 }

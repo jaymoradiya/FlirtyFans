@@ -2,14 +2,45 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-6 mb-3">
-        <div class="input-group">
+      <div class="d-flex justify-content-between p-0 mb-3">
+        <div class="input-group w-50">
           <input type="text" class="form-control" placeholder="Search">
         </div>
+        <div class="ms-auto my-auto">
+          <button class="btn btn-outline-primary" type="button"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: .75rem;">Upgrade
+            Now</button>
+        </div>
       </div>
-      <div class="col-6 text-end">
-        <button class="btn btn-outline-primary" type="button"
-          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: .75rem;">Upgrade Now</button>
+      <div class="mt-3" *ngIf="userParams">
+        <form #form="ngForm" (ngSubmit)="loadMembers()" class="d-flex mb-3" autocomplete="off">
+          <div class="d-flex mx-2">
+            <label class="col-form-label">Age from:</label>
+            <input type="number" class="form-control ms-1" style="width: 70px;" name="minAge"
+              [(ngModel)]="userParams.minAge">
+          </div>
+          <div class="d-flex mx-2">
+            <label class="col-form-label">Age to:</label>
+            <input type="number" class="form-control ms-1" style="width: 90px;" name="maxAge"
+              [(ngModel)]="userParams.maxAge">
+          </div>
+          <div class="d-flex mx-2">
+            <label class="col-form-label">Show:</label>
+            <select type="number" class="form-select ms-1 pe-0" style="width: 150px;" name="gender"
+              [(ngModel)]="userParams.gender">
+              <option *ngFor="let gender of genderList" [value]="gender.value">{{gender.display}}</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary ms-1" type="submit">Apply Filters</button>
+          <button class="btn btn-info ms-1" type="button" (click)="resetFilters()">Reset Filters</button>
+          <button class="btn btn-primary" [(ngModel)]="userParams.orderBy" btnRadio="created" name="orderBy"
+            tabindex="0" role="button" (click)="loadMembers()">Last Active</button>
+          <button class="btn btn-primary" [(ngModel)]="userParams.orderBy" btnRadio="lastActive" name="orderBy"
+            tabindex="0" role="button" (click)="loadMembers()">Member since</button>
+
+        </form>
+
       </div>
       <app-member-carousal [members]="members" class="col-12 p-0 m-0">
         <div class="row" *ngIf="pagination">
