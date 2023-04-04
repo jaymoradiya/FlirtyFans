@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { from } from 'rxjs';
+import { from, take } from 'rxjs';
 import { MemberListItemType } from 'src/app/models/enum/member-list-item.enum';
 import { Member } from 'src/app/models/member.model';
 import { Pagination } from 'src/app/models/pagination.model';
+import { UserParams } from 'src/app/models/userparams.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -21,36 +23,48 @@ export class MemberListComponent implements OnInit {
   maxSize = 5;
   status = 'ON';
   pagination?: Pagination;
-  pageNumber = 1;
-  pageSize = 4;
+  userParams: UserParams | undefined;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {
+    this.authService.currentUser$.pipe(take(1)).subscribe({
+      next: (user) => {
+        if (user) {
+          this.userParams = new UserParams(user);
+        }
+      },
+    });
+  }
   ngOnInit(): void {
     this.loadMembers();
   }
 
   loadMembers() {
-    this.userService.getUsers(this.pageNumber, this.pageSize).subscribe({
-      next: (res) => {
-        if (!res) return;
-        this.members = res.data;
-        this.mayLikeMembers = [...res.data];
-        this.chatRequests = [...res.data];
+    if (this.userParams) {
+      this.userService.getUsers(this.userParams).subscribe({
+        next: (res) => {
+          if (!res) return;
+          this.members = res.data;
+          this.mayLikeMembers = [...res.data];
+          this.chatRequests = [...res.data];
 
-        this.pagination = res.pagination;
-        this.carousalMembers = Array.from(
-          {
-            length: 3,
-          },
-          (_, idx) => ++idx
-        );
-      },
-    });
+          this.pagination = res.pagination;
+          this.carousalMembers = Array.from(
+            {
+              length: 3,
+            },
+            (_, idx) => ++idx
+          );
+        },
+      });
+    }
   }
 
   onPageChange(event: any) {
-    if (this.pageNumber !== event.page) {
-      this.pageNumber = event.page;
+    if (this.userParams && this.userParams.pageNumber !== event.page) {
+      this.userParams.pageNumber = event.page;
       this.loadMembers();
     }
   }

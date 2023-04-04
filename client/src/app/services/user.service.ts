@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Member } from '../models/member.model';
 import { ApiResponse } from '../models/api-response.model';
 import { PaginationResult } from '../models/pagination.model';
+import { UserParams } from '../models/userparams.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,47 +13,47 @@ import { PaginationResult } from '../models/pagination.model';
 export class UserService {
   BaseUrl = environment.api.baseUrl;
   members: Member[] = [];
-  paginationResult: PaginationResult<Member[]> = new PaginationResult<
-    Member[]
-  >();
 
   constructor(private http: HttpClient) {}
 
   getUsers(
-    page: number = 1,
-    itemPerPage: number = 10
+    userParams: UserParams
   ): Observable<PaginationResult<Member[]> | null> {
-    let params = new HttpParams();
+    let params = this.getPaginationParams(userParams);
 
-    params = params.append('pageNumber', page);
-    params = params.append('pageSize', itemPerPage);
+    return this.getPaginationResult<Member[]>(this.BaseUrl + 'users', params);
+  }
 
-    // if (this.members.length > 0)
-    //   return of({
-    //     data: this.members,
-    //   } as ApiResponse<Member[]>);
+  private getPaginationResult<T>(url: string, params: HttpParams) {
+    let paginationResult: PaginationResult<T> = new PaginationResult<T>();
 
     return this.http
-      .get<ApiResponse<Member[]>>(this.BaseUrl + 'users', {
+      .get<ApiResponse<T>>(url, {
         observe: 'response',
         params: params,
       })
       .pipe(
-        // map((res) => {
-        //   this.members = res.data;
-        //   return res;
-        // })
         map((res) => {
           if (res.body) {
-            this.paginationResult.data = res.body.data;
+            paginationResult.data = res.body.data;
           }
           const pagination = res.headers.get('Pagination');
           if (pagination) {
-            this.paginationResult.pagination = JSON.parse(pagination);
+            paginationResult.pagination = JSON.parse(pagination);
           }
-          return this.paginationResult;
+          return paginationResult;
         })
       );
+  }
+
+  private getPaginationParams(userParams: UserParams) {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', userParams.pageNumber);
+    params = params.append('pageSize', userParams.pageSize);
+    params = params.append('minAge', userParams.minAge);
+    params = params.append('maxAge', userParams.maxAge);
+    return params;
   }
 
   getMember(id: number): Observable<ApiResponse<Member>> {
