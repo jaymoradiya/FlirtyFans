@@ -9,7 +9,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AuthComponent } from './components/auth/auth.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ThemeBtnComponent } from './shared/components/theme-btn/theme-btn.component';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -29,6 +29,9 @@ import { LoadingInterceptor } from './shared/interceptor/loading.interceptor';
 import { PhotoEditComponent } from './components/photo-edit/photo-edit.component';
 import { MemberListItemComponent } from './components/member-list-item/member-list-item.component';
 import { MemberCarousalComponent } from './components/member-carousal/member-carousal.component';
+import { InputFieldComponent } from './shared/components/input-field/input-field.component';
+import { DatePickerComponent } from './shared/components/date-picker/date-picker.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,8 @@ import { MemberCarousalComponent } from './components/member-carousal/member-car
     PhotoEditComponent,
     MemberListItemComponent,
     MemberCarousalComponent,
+    InputFieldComponent,
+    DatePickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +62,9 @@ import { MemberCarousalComponent } from './components/member-carousal/member-car
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedModule,
+    BsDatepickerModule.forRoot(),
   ],
   providers: [
     {

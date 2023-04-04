@@ -1,0 +1,5 @@
+.form-control.ng-invalid.ng-touched.ng-dirty {
+  border: none;
+  outline: 1px solid red;
+  box-shadow: 0 0 0px 5px #ff000015;
+}

@@ -1,0 +1,20 @@
+<div class="mb-3 ">
+  <label [for]="label" class="form-label fs-5">{{label}}</label>
+  <input [type]="type" [placeholder]="label" class="form-control mt-1" [formControl]="control" />
+  <div class="text-danger mt-2" *ngIf="!control?.valid && control.touched && control.dirty">
+    invalid {{label | lowercase}}.
+    <span *ngIf="control?.errors?.['required']">
+      {{label | lowercase}} is required
+    </span>
+    <span *ngIf="control?.errors?.['minlength']">
+      {{label | lowercase}} must be at least {{control.errors?.['minLength'].requiredLength}} characters
+    </span>
+    <span *ngIf="control?.errors?.['maxLength']">
+      {{label | lowercase}} must be at most {{control.errors?.['maxLength'].requiredLength}} characters
+    </span>
+
+    <span *ngIf="control?.errors?.['confirmedValidator']">
+      {{label | lowercase}} must be same
+    </span>
+  </div>
+</div>

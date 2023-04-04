@@ -1,0 +1,11 @@
+<div class="mb-3">
+  <label [for]="label" class="form-label fs-5">{{label}}</label>
+  <input type="text" class="form-control" [formControl]="control" [placeholder]="label" bsDatepicker
+    [bsConfig]="bsConfig" [maxDate]="maxDate">
+  <div class="text-danger mt-2" *ngIf="!control?.valid && control.touched && control.dirty">
+    invalid {{label | lowercase}}.
+    <span *ngIf="control?.errors?.['required']">
+      {{label | lowercase}} is required
+    </span>
+  </div>
+</div>

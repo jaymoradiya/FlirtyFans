@@ -8,13 +8,14 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, Subscription } from 'rxjs';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthType } from 'src/app/models/enum/auth-type.enum';
 import { ApiResponse } from 'src/app/models/api-response.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserAuthModel } from 'src/app/models/user-auth.model';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmedValidator } from 'src/app/helpers/validators.helper';
 
 type validator = { error: boolean | undefined; message: string };
 @Component({
@@ -24,17 +25,16 @@ type validator = { error: boolean | undefined; message: string };
 })
 export class AuthComponent implements OnInit, OnDestroy {
   @ViewChild('authForm')
-  authForm: NgForm | undefined;
+  loginForm: NgForm | undefined;
 
-  @ViewChild('signupForm')
-  signupForm: NgForm | undefined;
+  signupForm: FormGroup = new FormGroup({});
 
   @ViewChild('resetForm')
   resetForm: NgForm | undefined;
 
   authType: AuthType = AuthType.signup;
   AuthTypes = AuthType;
-  response: ApiResponse<User> | null | undefined;
+  validationError: string[] = [];
   responseOb: Observable<ApiResponse<User> | null> | undefined;
   responseSub: Subscription | undefined;
 
@@ -54,7 +54,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +64,21 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params) => {
       this.changeAuthType(params['type']);
     });
+    this.signupForm = this.fb.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        knownAs: ['', Validators.required],
+        city: ['', Validators.required],
+        country: ['', Validators.required],
+        gender: ['', Validators.required],
+        dob: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validator: ConfirmedValidator('password', 'confirmPassword'),
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -70,8 +86,21 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.authForm?.valid) return;
-    const user: UserAuthModel = this.authForm?.form.value;
+    let user;
+
+    if (this.authType === AuthType.login) {
+      if (!this.loginForm?.valid) return;
+      user = this.loginForm?.form.value;
+    }
+    if (this.authType === AuthType.signup) {
+      if (!this.signupForm?.valid) return;
+      user = this.signupForm.value;
+      let dob = this.getDateOnly(user.dob);
+      user = {
+        ...user,
+        dateOfBirth: dob,
+      };
+    }
     switch (this.authType) {
       case AuthType.login:
         this.responseOb = this.authService.login(user);
@@ -86,12 +115,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.responseSub = this.responseOb?.subscribe(
       (res) => {
-        this.response = res;
         this.router.navigate(['members']);
       },
       (err) => {
+        this.validationError = err;
         console.log('error occurred!!');
-        this.response = err;
       },
       null
     );
@@ -100,21 +128,21 @@ export class AuthComponent implements OnInit, OnDestroy {
   emailValidate(): validator {
     return {
       error:
-        (!this.authForm?.form.get('email')?.valid &&
-          this.authForm?.form.get('email')?.touched &&
-          this.authForm?.form.get('email')?.dirty) == true,
+        !this.loginForm?.form.get('email')?.valid &&
+        this.loginForm?.form.get('email')?.touched &&
+        this.loginForm?.form.get('email')?.dirty,
       message: 'please enter valid email',
     };
   }
   passValidate(): validator {
     return {
       error:
-        (!this.authForm?.form.get('password')?.valid &&
-          this.authForm?.form.get('password')?.touched &&
-          this.authForm?.form.get('password')?.dirty) == true,
+        (!this.loginForm?.form.get('password')?.valid &&
+          this.loginForm?.form.get('password')?.touched &&
+          this.loginForm?.form.get('password')?.dirty) == true,
       message:
         'please enter valid password' +
-        (this.authForm?.form.get('password')?.value.length < 6
+        (this.loginForm?.form.get('password')?.value.length < 6
           ? ', must be greater than 6 char'
           : ''),
     };
@@ -122,11 +150,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   cPassValidate(): validator {
     return {
       error:
-        (this.authForm?.form.get('cPassword')?.touched &&
-          this.authForm?.form.get('cPassword')?.dirty &&
-          (!this.authForm?.form.get('password')?.valid ||
-            this.authForm?.form.get('password')?.value !=
-              this.authForm?.form.get('cPassword')?.value)) == true,
+        (this.loginForm?.form.get('cPassword')?.touched &&
+          this.loginForm?.form.get('cPassword')?.dirty &&
+          (!this.loginForm?.form.get('password')?.valid ||
+            this.loginForm?.form.get('password')?.value !=
+              this.loginForm?.form.get('cPassword')?.value)) == true,
       message: "password doesn't match",
     };
   }
@@ -180,5 +208,15 @@ export class AuthComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+  }
+
+  getDateOnly(dob: string | undefined) {
+    if (!dob) return;
+    let theDob = new Date(dob);
+    return new Date(
+      theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset())
+    )
+      .toISOString()
+      .slice(0, 10);
   }
 }

@@ -42,7 +42,7 @@
           <span class="fs-3 fw-bolder">{{appName}}</span>
         </a>
       </div>
-      <img [src]="user?.photoUrl" alt="" width="75" height="75" class="rounded-circle mb-2">
+      <img [src]="user?.photoUrl || './assets/user.png'" alt="" width="75" height="75" class="rounded-circle mb-2">
       <p>
         <strong>Welcome {{user?.knownAs}}</strong>
       </p>

@@ -1,4 +1,4 @@
-<div class="container">
+<div>
   <div class="page-title-wrapper">
     <div class="page-title">{{ pageInfo.title}} </div>
     <div class="page-info">{{ pageInfo.subtitle_suffix}}
@@ -8,7 +8,6 @@
       {{ pageInfo.subtitle_suffix}}
     </div>
   </div>
-
 
   <div class="card text-left">
     <div class="nav-card-tabs" *ngIf="authType !== AuthTypes.resetPass">
@@ -64,32 +63,45 @@
 
 
 <ng-template #signup>
-  <form class="card-body form" #authForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="email" class="form-label fs-5">Email</label>
-      <input type="email" name="email" placeholder="Email" class="form-control mt-1" ngModel #email="ngModel" email
-        required />
-      <div class="error-text" *ngIf="emailValidate().error">
-        {{emailValidate().message}}
-      </div>
+  <form class="card-body form" [formGroup]="signupForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <app-input-field label="Email" type="email" [formControl]="$any(signupForm.controls['email'])">
+    </app-input-field>
+    <app-input-field label="KnownAs" type="text" [formControl]="$any(signupForm.controls['knownAs'])">
+    </app-input-field>
+    <div class="row p-0 m-0 tex-left">
+      <app-input-field label="City" type="text" [formControl]="$any(signupForm.controls['city'])" class="col me-2 p-0">
+      </app-input-field>
+      <app-input-field label="Country" type="text" [formControl]="$any(signupForm.controls['country'])"
+        class="col ms-2 p-0">
+      </app-input-field>
     </div>
+    <app-input-field label="Password" type="password" [formControl]="$any(signupForm.controls['password'])">
+    </app-input-field>
+    <app-input-field label="Confirm Password" type="password"
+      [formControl]="$any(signupForm.controls['confirmPassword'])">
+    </app-input-field>
+    <app-date-picker label="Date of Birth" [formControl]="$any(signupForm.controls['dob'])">
+    </app-date-picker>
     <div class="mb-3">
-      <label for="password" class="form-label fs-5">Password</label>
-      <input type="password" name="password" placeholder="Password" class="form-control mt-1" ngModel required
-        minlength="6" />
-      <div class="error-text" *ngIf="passValidate().error">
-        {{passValidate().message}}
-      </div>
+      <label for="gender" class="form-label fs-5 me-1 ">I'm a</label>
+      <span class="form-check-inline me-2">
+        <input type="radio" name="gender" value="male" class="form-check-input" checked formControlName="gender" />
+        <label for="male" class="form-check-label ms-1">Male</label>
+      </span>
+      <span class="form-check-inline">
+        <input type="radio" name="gender" value="female" class="form-check-input " formControlName="gender" />
+        <label for="female" class="form-check-label ms-1">Female</label>
+      </span>
     </div>
-    <div class="mb-3">
-      <label for="cPassword" class="form-label fs-5">Confirm Password</label>
-      <input type="password" name="cPassword" placeholder="Confirm Password" class="form-control mt-1" ngModel required
-        minlength="6" [ngClass]="{'ng-invalid': !!cPassValidate().error}" />
-      <div class="error-text" *ngIf="cPassValidate().error">
-        {{cPassValidate().message}}
-      </div>
+
+
+    <div *ngIf="validationError.length" class="mb-3">
+      <ul class="text-danger">
+        <li *ngFor="let error of validationError">{{error}}</li>
+      </ul>
     </div>
-    <!-- <input type="submit" value="Sign up" class="btn"> -->
+
+
     <app-theme-btn type="submit" value="Sign Up" class="mx-auto"></app-theme-btn>
     <div class="login-info">
       <p>This form is protected by hCaptcha and its <a href="#" class="link">Privacy Policy</a> and <a href="#"
