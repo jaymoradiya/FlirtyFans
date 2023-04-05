@@ -17,6 +17,7 @@ export class MemberListComponent implements OnInit {
   members: Member[] = [];
   mayLikeMembers: Member[] = [];
   chatRequests: Member[] = [];
+  predicate = 'likedBy';
   memberListType = MemberListItemType;
 
   pagination?: Pagination;
@@ -38,6 +39,7 @@ export class MemberListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMembers();
+    this.loadLikes();
   }
 
   loadMembers(pageChange = false) {
@@ -47,7 +49,6 @@ export class MemberListComponent implements OnInit {
         next: (res) => {
           if (!res) return;
           this.members = res.data;
-          this.mayLikeMembers = [...res.data];
           this.chatRequests = [...res.data];
 
           this.pagination = res.pagination;
@@ -55,6 +56,14 @@ export class MemberListComponent implements OnInit {
         },
       });
     }
+  }
+
+  loadLikes() {
+    this.userService.getLikes(this.predicate, 1, 3).subscribe({
+      next: (res) => {
+        this.mayLikeMembers = res.data;
+      },
+    });
   }
 
   resetFilters() {

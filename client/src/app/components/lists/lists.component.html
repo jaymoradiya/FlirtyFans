@@ -1,0 +1,31 @@
+<div class="text-center mt-3">
+  <h2>{{predicate === 'liked' ? 'Member I like' : 'Member you may like'}}</h2>
+</div>
+<div class="container mt-3">
+  <div class="d-flex">
+    <nav class="nav nav-pills nav-fill">
+      <li class="nav-item {{predicate === 'liked' ? 'active' : 'text-decoration-underline'}}" style="cursor: pointer;"
+        btnRadio="liked" [(ngModel)]="predicate" (click)="loadLikes()">
+        Members I like
+      </li>
+
+      <li class="nav-item {{predicate === 'likedBy' ? 'active' : 'text-decoration-underline'}}" style="cursor: pointer;"
+        btnRadio="likedBy" [(ngModel)]="predicate" (click)="loadLikes()">
+        Members you may
+      </li>
+    </nav>
+
+  </div>
+  <div class="row mt-3">
+    <div class="col-2" *ngFor="let member of members">
+      <app-member-card [member]="member">
+      </app-member-card>
+    </div>
+  </div>
+  <div class="row" *ngIf="pagination">
+    <div class="col-xs-12 col-12">
+      <pagination [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemPerPage" [maxSize]="10"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="onPageChange($event)"></pagination>
+    </div>
+  </div>
+</div>

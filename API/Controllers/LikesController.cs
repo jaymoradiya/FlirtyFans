@@ -2,6 +2,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
@@ -51,10 +52,16 @@ namespace API.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<ApiResponseDto<IEnumerable<LikeDto>>>> GetUserLikes(string predicate)
+        public async Task<ActionResult<ApiResponseDto<PagedList<LikeDto>>>> GetUserLikes([FromQuery] LikesParams likesParams)
         {
-            var users = await _likesRepository.GetUserLikes(predicate, User.GetUserId());
-            return Ok(ApiResponseDto<IEnumerable<LikeDto>>.Success(users, "Data fetch successfully"));
+            likesParams.UserId = User.GetUserId();
+
+            var users = await _likesRepository.GetUserLikes(likesParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(likesParams.PageNumber, likesParams.PageSize, users.TotalPages, users.TotalCount));
+
+
+            return Ok(ApiResponseDto<PagedList<LikeDto>>.Success(users, "Data fetch successfully"));
         }
     }
 }

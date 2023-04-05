@@ -71,6 +71,22 @@ export class UserService {
       );
   }
 
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.BaseUrl + 'users/delete-photo/' + photoId);
+  }
+
+  addLike(userId: number) {
+    return this.http.post(this.BaseUrl + 'likes/' + userId, {});
+  }
+
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+    params = params.append('predicate', predicate);
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+
+    return this.getPaginationResult<Member[]>(this.BaseUrl + 'likes', params);
+  }
   setUserParams(params: UserParams) {
     this.userParams = params;
   }
@@ -89,10 +105,6 @@ export class UserService {
 
   setMainPhoto(photoId: number) {
     return this.http.put(this.BaseUrl + 'users/set-main-photo/' + photoId, {});
-  }
-
-  deletePhoto(photoId: number) {
-    return this.http.delete(this.BaseUrl + 'users/delete-photo/' + photoId);
   }
 
   private getPaginationResult<T>(url: string, params: HttpParams) {
