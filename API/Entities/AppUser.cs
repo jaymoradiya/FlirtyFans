@@ -19,6 +19,9 @@ namespace API.Entities
         public List<Photo> Photos { get; set; } = new();
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         public DateTime Created { get; set; } = DateTime.UtcNow;
+
+        public List<UserLike> LikeByUsers { get; set; }
+        public List<UserLike> LikedUsers { get; set; }
     }
 
 }
