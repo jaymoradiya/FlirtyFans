@@ -31,8 +31,7 @@ import { MemberListItemComponent } from './components/member-list-item/member-li
 import { MemberCarousalComponent } from './components/member-carousal/member-carousal.component';
 import { InputFieldComponent } from './shared/components/input-field/input-field.component';
 import { DatePickerComponent } from './shared/components/date-picker/date-picker.component';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import { TimeagoModule } from 'ngx-timeago';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +63,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    BsDatepickerModule.forRoot(),
+    TimeagoModule,
   ],
   providers: [
     {

@@ -12,5 +12,10 @@ namespace API.Extensions
         {
             return Int32.Parse(user.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
+
+        public static string GetUserEmail(this ClaimsPrincipal user)
+        {
+            return user.FindFirst(ClaimTypes.Email).Value;
+        }
     }
 }
