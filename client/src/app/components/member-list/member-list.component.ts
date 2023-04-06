@@ -52,7 +52,6 @@ export class MemberListComponent implements OnInit {
           this.chatRequests = [...res.data];
 
           this.pagination = res.pagination;
-          console.log('pagination ', this.pagination);
         },
       });
     }

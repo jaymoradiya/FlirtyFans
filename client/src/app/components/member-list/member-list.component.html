@@ -34,10 +34,12 @@
 
           <button class="btn btn-primary ms-1" type="submit">Apply Filters</button>
           <button class="btn btn-info ms-1" type="button" (click)="resetFilters()">Reset Filters</button>
-          <button class="btn btn-primary" [(ngModel)]="userParams.orderBy" btnRadio="created" name="orderBy"
-            tabindex="0" role="button" (click)="loadMembers()">Last Active</button>
-          <button class="btn btn-primary" [(ngModel)]="userParams.orderBy" btnRadio="lastActive" name="orderBy"
-            tabindex="0" role="button" (click)="loadMembers()">Member since</button>
+          <div class="btn-group" btnRadioGroup [(ngModel)]="userParams.orderBy" name="orderBy">
+            <button type="button" class="btn btn-primary" btnRadio="created" tabindex="0" (click)="loadMembers()">Last
+              Active</button>
+            <button type="button" class="btn btn-primary" btnRadio="lastActive" tabindex="0"
+              (click)="loadMembers()">Member since</button>
+          </div>
 
         </form>
 
