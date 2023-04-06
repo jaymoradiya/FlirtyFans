@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.thread-container {
+  height: 100%;
+  background-color: #dbdbdb6b;
+}
+
+.item-container {
+  background-color: #fff;
+  cursor: pointer;
+}

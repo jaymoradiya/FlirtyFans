@@ -8,7 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
 import { ListsComponent } from './components/lists/lists.component';
-import { MessagesComponent } from './components/messages/messages.component';
+import MessagesComponent from './components/messages/messages.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';

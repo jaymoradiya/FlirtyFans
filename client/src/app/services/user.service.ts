@@ -8,6 +8,7 @@ import { PaginationResult } from '../models/pagination.model';
 import { UserParams } from '../models/userparams.model';
 import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
+import { getPaginationParams, getPaginationResult } from './paginnation-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -36,11 +37,12 @@ export class UserService {
     const result = this.membersCaches.get(Object.values(userParams).join('-'));
     if (result) return of(result);
 
-    let params = this.getPaginationParams(userParams);
+    let params = getPaginationParams(userParams);
 
-    return this.getPaginationResult<Member[]>(
+    return getPaginationResult<Member[]>(
       this.BaseUrl + 'users',
-      params
+      params,
+      this.http
     ).pipe(
       map((res) => {
         if (res.data) {
@@ -85,7 +87,11 @@ export class UserService {
     params = params.append('pageNumber', pageNumber);
     params = params.append('pageSize', pageSize);
 
-    return this.getPaginationResult<Member[]>(this.BaseUrl + 'likes', params);
+    return getPaginationResult<Member[]>(
+      this.BaseUrl + 'likes',
+      params,
+      this.http
+    );
   }
   setUserParams(params: UserParams) {
     this.userParams = params;
@@ -105,38 +111,5 @@ export class UserService {
 
   setMainPhoto(photoId: number) {
     return this.http.put(this.BaseUrl + 'users/set-main-photo/' + photoId, {});
-  }
-
-  private getPaginationResult<T>(url: string, params: HttpParams) {
-    let paginationResult: PaginationResult<T> = new PaginationResult<T>();
-
-    return this.http
-      .get<ApiResponse<T>>(url, {
-        observe: 'response',
-        params: params,
-      })
-      .pipe(
-        map((res) => {
-          if (res.body) {
-            paginationResult.data = res.body.data;
-          }
-          const pagination = res.headers.get('Pagination');
-          if (pagination) {
-            paginationResult.pagination = JSON.parse(pagination);
-          }
-          return paginationResult;
-        })
-      );
-  }
-
-  private getPaginationParams(userParams: UserParams) {
-    let params = new HttpParams();
-
-    params = params.append('pageNumber', userParams.pageNumber);
-    params = params.append('pageSize', userParams.pageSize);
-    params = params.append('minAge', userParams.minAge);
-    params = params.append('maxAge', userParams.maxAge);
-    params = params.append('gender', userParams.gender);
-    return params;
   }
 }

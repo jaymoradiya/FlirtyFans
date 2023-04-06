@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { UserAuthModel } from '../models/user-auth.model';
 import { ApiResponse } from '../models/api-response.model';

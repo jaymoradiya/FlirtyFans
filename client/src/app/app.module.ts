@@ -17,7 +17,6 @@ import { HomeComponent } from './components/home/home.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
 import { ListsComponent } from './components/lists/lists.component';
-import { MessagesComponent } from './components/messages/messages.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './shared/modules/shared.module';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
@@ -32,6 +31,7 @@ import { MemberCarousalComponent } from './components/member-carousal/member-car
 import { InputFieldComponent } from './shared/components/input-field/input-field.component';
 import { DatePickerComponent } from './shared/components/date-picker/date-picker.component';
 import { TimeagoModule } from 'ngx-timeago';
+import MessagesComponent from './components/messages/messages.component';
 @NgModule({
   declarations: [
     AppComponent,
