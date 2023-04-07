@@ -63,10 +63,16 @@
 
 
 <ng-template #signup>
-  <form class="card-body form" [formGroup]="signupForm" (ngSubmit)="onSubmit()" autocomplete="off">
+  <form class="card-body form" [formGroup]="signupForm" (ngSubmit)="onSubmit()" autocomplete="off" autocapitalize="off">
+    <div class="row p-0 m-0 tex-left">
+      <app-input-field label="Username" type="text" [formControl]="$any(signupForm.controls['username'])"
+        class="col me-2 p-0">
+      </app-input-field>
+      <app-input-field label="KnownAs" type="text" [formControl]="$any(signupForm.controls['knownAs'])"
+        class="col me-2 p-0">
+      </app-input-field>
+    </div>
     <app-input-field label="Email" type="email" [formControl]="$any(signupForm.controls['email'])">
-    </app-input-field>
-    <app-input-field label="KnownAs" type="text" [formControl]="$any(signupForm.controls['knownAs'])">
     </app-input-field>
     <div class="row p-0 m-0 tex-left">
       <app-input-field label="City" type="text" [formControl]="$any(signupForm.controls['city'])" class="col me-2 p-0">

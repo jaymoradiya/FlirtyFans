@@ -67,6 +67,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.signupForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
+        username: ['', Validators.required],
         knownAs: ['', Validators.required],
         city: ['', Validators.required],
         country: ['', Validators.required],
