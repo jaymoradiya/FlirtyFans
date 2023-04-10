@@ -8,7 +8,10 @@ import { PaginationResult } from '../models/pagination.model';
 import { UserParams } from '../models/userparams.model';
 import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
-import { getPaginationParams, getPaginationResult } from './paginnation-helper';
+import {
+  getPaginationParams,
+  getPaginationResult,
+} from '../helpers/paginnation-helper';
 
 @Injectable({
   providedIn: 'root',

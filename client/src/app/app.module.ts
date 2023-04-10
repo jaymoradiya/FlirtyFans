@@ -32,6 +32,7 @@ import { InputFieldComponent } from './shared/components/input-field/input-field
 import { DatePickerComponent } from './shared/components/date-picker/date-picker.component';
 import { TimeagoModule } from 'ngx-timeago';
 import MessagesComponent from './components/messages/messages.component';
+import { MessageListComponent } from './components/message-list/message-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +55,7 @@ import MessagesComponent from './components/messages/messages.component';
     MemberCarousalComponent,
     InputFieldComponent,
     DatePickerComponent,
+    MessageListComponent,
   ],
   imports: [
     BrowserModule,

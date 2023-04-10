@@ -4,11 +4,28 @@
 }
 
 .thread-container {
-  height: 100%;
+  position: sticky;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  overflow-y: scroll;
   background-color: #dbdbdb6b;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+.thread-container::-webkit-scrollbar {
+  display: none;
 }
 
 .item-container {
-  background-color: #fff;
+  background-color: #ffffff73;
   cursor: pointer;
+}
+
+.item-container.active {
+  background-color: #fff;
+  transition: all .3s ease-in;
 }

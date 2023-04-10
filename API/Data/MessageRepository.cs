@@ -1,5 +1,6 @@
 using Api.Entities;
 using API.DTOs;
+using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
@@ -114,6 +115,29 @@ namespace API.Data
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        void IMessageRepository.AddGroup(Group group)
+        {
+            _context.Groups.Add(group);
+        }
+
+        async Task<Connection> IMessageRepository.GetConnection(string connectionId)
+        {
+            return await _context.Connections.FindAsync(connectionId);
+
+        }
+
+        async Task<Group> IMessageRepository.GetMessageGroup(string groupName)
+        {
+            return await _context.Groups
+                .Include(x => x.Connections)
+                .FirstOrDefaultAsync(g => g.Name == groupName);
+        }
+
+        void IMessageRepository.RemoveConnection(Connection connection)
+        {
+            _context.Connections.Remove(connection);
         }
     }
 }

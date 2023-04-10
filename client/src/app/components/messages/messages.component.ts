@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { take } from 'rxjs';
 import { Message } from 'src/app/models/message.model';
 import { Pagination } from 'src/app/models/pagination.model';
 import { Thread } from 'src/app/models/thread.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
@@ -10,8 +13,16 @@ import { MessageService } from 'src/app/services/message.service';
   styleUrls: ['./messages.component.css'],
 })
 export default class MessagesComponent implements OnInit {
-  messages?: Message[];
+  selectedThreadUser:
+    | {
+        id: number;
+        photoUrl: string;
+        knownAs: string;
+      }
+    | undefined;
   threads?: Thread[];
+  user?: User;
+  content: string = '';
   pagination?: Pagination;
   container = 'Unread';
   pageNumber = 1;
@@ -20,24 +31,14 @@ export default class MessagesComponent implements OnInit {
   constructor(private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.loadMessages();
     this.loadThreads();
-  }
-
-  loadMessages() {
-    this.messageService
-      .getMessages(this.pageNumber, this.pageSize, this.container)
-      .subscribe({
-        next: (res) => {
-          (this.messages = res.data), (this.pagination = res.pagination);
-        },
-      });
   }
 
   loadThreads() {
     this.messageService.getThreads().subscribe({
       next: (res) => {
         this.threads = res.data;
+        if (this.threads.length > 0) this.selectThread(this.threads[0]);
       },
     });
   }
@@ -55,18 +56,11 @@ export default class MessagesComponent implements OnInit {
         knownAs: thread.lastMessage.recipientKnownAs,
       },
     ];
-    var otherUser = users.find((u) => u.id === thread.otherUserId);
-    return {
-      knownAs: otherUser?.knownAs,
-      photoUrl: otherUser?.photoUrl,
-      id: otherUser?.id,
-    };
+    return users.find((u) => u.id === thread.otherUserId)!;
   }
 
-  onPageChange(event: any) {
-    if (this.pageNumber !== event.page) {
-      this.pageNumber = event.page;
-      this.loadMessages();
-    }
+  selectThread(thread: Thread) {
+    this.selectedThreadUser = this.getOtherUserDetails(thread);
+    console.log('from parent', this.selectedThreadUser);
   }
 }

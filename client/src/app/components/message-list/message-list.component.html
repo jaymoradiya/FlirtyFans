@@ -1,0 +1,41 @@
+<div *ngIf="messages &&recipientUser && user" class="wrapper p-5 pt-3">
+  <div class="thread-nav row" *ngIf="showNav">
+    <div class="col-2">
+      <img [src]="user.photoUrl" [alt]="user.knownAs" class="rounded-circle shadow border border-light" width="50px"
+        height="50px">
+      <img [src]="recipientUser.photoUrl" alt="other user" class="rounded-circle shadow border border-light profile-img"
+        width="50px" height="50px">
+    </div>
+    <div class="col-10  my-auto p-0 row text-left">
+      <div class="fs-4 fw-600 col-12 align-middle p-0 m-0">{{user.knownAs}},{{"
+        "+recipientUser.knownAs}}</div>
+      <div class="text-muted fs-6 col-12  p-0 m-0">
+        {{messages[messages.length-1].dateSent | timeago}}
+      </div>
+    </div>
+    <hr class="my-3">
+  </div>
+  <div class="message-view">
+    <div class="text-bolder message-container {{!isMyMessage(message) ? 'me-auto' : 'ms-auto' }}"
+      *ngFor="let message of messages">
+      <p class="text-muted mb-1 fs-6" *ngIf="!isMyMessage(message)">{{message.senderKnownAs}}</p>
+      <div class="message-content {{!isMyMessage(message) ? 'me-auto' : 'ms-auto' }}">
+        {{message.content}}
+      </div>
+      <p class="text-muted text-end mt-1 fs-6">{{message.dateSent | timeago}} {{message.dateRead ? ''
+        : '(unread)'}}</p>
+    </div>
+  </div>
+  <form class="form message-field-wrapper m-0" #messageForm="ngForm" (ngSubmit)="sendMessage()">
+    <div class="d-flex justify-content-between p-0">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" name="content" [(ngModel)]="content">
+      </div>
+      <div class="mx-2 ms-2">
+        <button class="btn btn-outline-primary text-dark" type="submit">
+          send
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

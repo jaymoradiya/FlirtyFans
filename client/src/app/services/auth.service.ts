@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 import { UserAuthModel } from '../models/user-auth.model';
 import { ApiResponse } from '../models/api-response.model';
 import { Router } from '@angular/router';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,11 @@ export class AuthService {
     new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUser.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private presenceService: PresenceService
+  ) {}
 
   login(user: UserAuthModel): Observable<ApiResponse<User>> {
     return this.http
@@ -49,12 +54,14 @@ export class AuthService {
     if (!userString) return;
     const user = JSON.parse(userString);
     // this.router.navigateByUrl('/members');
+    this.setCurrentUser(user);
     this.currentUser.next(user);
   }
 
   logout() {
     localStorage.removeItem('userData');
     this.currentUser.next(null);
+    this.presenceService.stopHubConnection();
     this.router.navigate(['']);
   }
 
@@ -65,6 +72,7 @@ export class AuthService {
 
   setCurrentUser(user: User) {
     localStorage.setItem('userData', JSON.stringify(user));
+    this.presenceService.createHubConnection(user);
     this.currentUser.next(user);
   }
 }

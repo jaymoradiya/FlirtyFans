@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
   api: {
-    baseUrl: '/api',
+    baseUrl: '/api/',
+    hubUrl: '/hubs/',
   },
   string: {
     appName: 'Flirty Fans',

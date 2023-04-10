@@ -1,7 +1,6 @@
-<div class="container">
-
+<div class="container" *ngIf="threads">
   <div class="row" style="height: 100%;">
-    <div class="col-4 thread-container px-3 pt-4" *ngIf="threads">
+    <div class="col-4 thread-container px-3 pt-4">
       <div class="text-center">
         <h2 class="m-0 p-0 fw-800">Conversation</h2>
         <span class="d-block text-muted text-truncate">{{threads.length}} Conversation detected</span>
@@ -9,20 +8,25 @@
       <form class="mt-4 mb-3 mx-2">
         <input type="text" class="form-control" placeholder="Search">
       </form>
-      <div class="m-2 p-3 row item-container rounded" *ngFor="let thread of threads">
+      <div class="m-2 p-3 row item-container rounded"
+        [class.active]="getOtherUserDetails(thread).id == selectedThreadUser?.id" *ngFor="let thread of threads"
+        (click)="selectThread(thread)">
         <img [src]="getOtherUserDetails(thread).photoUrl" [alt]="getOtherUserDetails(thread).knownAs"
           class="p-0 rounded d-inline" style="width: 50px;">
-        <p class="col-6 text-left pt-1 my-auto d-inline">
-          <strong class="text-truncate">{{getOtherUserDetails(thread).knownAs}}</strong>
+        <p class="col-6 text-left pt-1 my-auto d-inline text-truncate">
+          <strong class="">{{getOtherUserDetails(thread).knownAs}}</strong>
           <br>
-          <span class="text-truncate">{{thread.lastMessage.dateSent +'z' | timeago}}</span>
+          <span class="fs-6 text-muted">{{thread.lastMessage.dateSent | timeago}}</span>
         </p>
-        <span class="text-truncate mt-3 col-12 text-left m-0 p-0">{{thread.lastMessage.content}}</span>
+        <span class="text-truncate text-muted mt-3 col-12 text-left m-0 p-0">
+          <span *ngIf="thread.lastMessage.senderId == thread.userId">You:</span>
+          {{thread.lastMessage.content}}
+        </span>
 
       </div>
     </div>
-    <div class="col-8">
-
+    <div class="col-8 " *ngIf="selectedThreadUser">
+      <app-message-list [recipientUser]="selectedThreadUser" [showNav]="true"></app-message-list>
     </div>
   </div>
 </div>

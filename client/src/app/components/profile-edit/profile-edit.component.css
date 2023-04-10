@@ -1,3 +1,11 @@
+.member-details {
+  height: 100vh;
+}
+
+.card {
+  border: none;
+}
+
 .img-thumbnail {
   margin: 25px;
   width: 85%;

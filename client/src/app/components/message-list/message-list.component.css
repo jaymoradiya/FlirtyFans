@@ -1,0 +1,55 @@
+.wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  height: 100%;
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.thread-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+.profile-img {
+  position: absolute;
+  left: 5%;
+  z-index: 1;
+}
+
+.message-container {
+  max-width: 70%;
+  width: fit-content;
+}
+
+.message-content {
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 10px;
+  width: fit-content;
+  word-wrap: break-word;
+}
+
+.message-field-wrapper {
+  position: sticky;
+  width: 100%;
+  bottom: 50px;
+  left: 0;
+}
+
+.message-view {
+  height: 75vh;
+  bottom: 50px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+.message-view::-webkit-scrollbar {
+  display: none;
+}

@@ -1,10 +1,10 @@
-<div class="row" *ngIf="member">
+<div class="row m-5 mt-4 member-details" *ngIf="member">
   <div class="col-4 ">
     <h1>Your Profile</h1>
   </div>
-  <div class="col-8">
-    <div class="alert alert-info pb-0" *ngIf="editForm.dirty">
-      <p><strong>Information: </strong>You have made changes. Any unsaved changes will be loss.</p>
+  <div class="col-8 m-0 p-0">
+    <div class="alert alert-info py-3" *ngIf="editForm.dirty">
+      <p class="p-0 m-0"><strong>Information: </strong>You have made changes. Any unsaved changes will be loss.</p>
     </div>
   </div>
   <div class="col-4">
@@ -23,7 +23,7 @@
         </div>
         <div>
           <strong>Last Active:</strong>
-          <p>{{member.lastActive +'z'| timeago }}</p>
+          <p>{{member.lastActive | timeago }}</p>
         </div>
         <div>
           <strong>Member since:</strong>
@@ -60,7 +60,6 @@
         <app-photo-edit [member]="member"></app-photo-edit>
         <!-- <gallery [items]="getGalleryItem()!"></gallery> -->
       </tab>
-
     </tabset>
   </div>
 </div>

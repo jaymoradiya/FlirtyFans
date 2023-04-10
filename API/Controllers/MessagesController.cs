@@ -8,6 +8,7 @@ using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -34,6 +35,8 @@ namespace API.Controllers
 
             var sender = await _userRepository.GetUserByIdAsync(userId);
             var receiver = await _userRepository.GetUserByIdAsync(createMessageDto.RecipientUserId);
+
+            if (receiver == null) return BadRequest(ApiResponseDto<string>.Error("Not found user"));
 
             var message = new Message
             {
