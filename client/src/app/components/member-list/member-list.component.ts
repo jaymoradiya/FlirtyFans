@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { from, take } from 'rxjs';
 import { MemberListItemType } from 'src/app/models/enum/member-list-item.enum';
 import { Member } from 'src/app/models/member.model';
 import { Pagination } from 'src/app/models/pagination.model';
-import { User } from 'src/app/models/user.model';
+import { Thread } from 'src/app/models/thread.model';
 import { UserParams } from 'src/app/models/userparams.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'src/app/services/message.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,9 +15,10 @@ import { UserService } from 'src/app/services/user.service';
 export class MemberListComponent implements OnInit {
   members: Member[] = [];
   mayLikeMembers: Member[] = [];
-  chatRequests: Member[] = [];
+  messageThreads: Thread[] = [];
   predicate = 'likedBy';
   memberListType = MemberListItemType;
+  showFilter = false;
 
   pagination?: Pagination;
   userParams: UserParams | undefined;
@@ -33,29 +33,33 @@ export class MemberListComponent implements OnInit {
     },
   ];
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private messageService: MessageService
+  ) {
     this.userParams = this.userService.getUserParams();
   }
 
   ngOnInit(): void {
-    this.loadMembers();
+    // this.loadMembers();
     this.loadLikes();
+    this.loadMessageThreads();
   }
 
-  loadMembers(pageChange = false) {
-    if (this.userParams) {
-      if (!pageChange) this.userParams.pageNumber = 1;
-      this.userService.getUsers(this.userParams).subscribe({
-        next: (res) => {
-          if (!res) return;
-          this.members = res.data;
-          this.chatRequests = [...res.data];
-
-          this.pagination = res.pagination;
-        },
-      });
-    }
-  }
+  // loadMembers(pageChange = false) {
+  //   if (this.userParams) {
+  //     if (!pageChange) this.userParams.pageNumber = 1;
+  //     this.userService.getUsers(this.userParams).subscribe({
+  //       next: (res) => {
+  //         if (!res) return;
+  //         this.members = res.data;
+  //         this.chatRequests = [...res.data];
+  //
+  //         this.pagination = res.pagination;
+  //       },
+  //     });
+  //   }
+  // }
 
   loadLikes() {
     this.userService.getLikes(this.predicate, 1, 3).subscribe({
@@ -65,15 +69,23 @@ export class MemberListComponent implements OnInit {
     });
   }
 
-  resetFilters() {
-    this.userParams = this.userService.resetUserParams();
+  loadMessageThreads() {
+    this.messageService.getThreads().subscribe({
+      next: (res) => {
+        this.messageThreads = res.data;
+      },
+    });
   }
 
-  onPageChange(event: any) {
-    if (this.userParams && this.userParams.pageNumber !== event.page) {
-      this.userParams.pageNumber = event.page;
-      this.userService.setUserParams(this.userParams);
-      this.loadMembers(true);
-    }
-  }
+  // resetFilters() {
+  //   this.userParams = this.userService.resetUserParams();
+  // }
+
+  // onPageChange(event: any) {
+  //   if (this.userParams && this.userParams.pageNumber !== event.page) {
+  //     this.userParams.pageNumber = event.page;
+  //     this.userService.setUserParams(this.userParams);
+  //     this.loadMembers(true);
+  //   }
+  // }
 }

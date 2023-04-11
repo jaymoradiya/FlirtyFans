@@ -1,5 +1,6 @@
-.container {
+section.container {
   background-color: #F4F2FD;
+  width: min-content;
 }
 
 .card {

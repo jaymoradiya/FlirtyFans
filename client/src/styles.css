@@ -1,8 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
+@font-face {
+  font-family: pangram;
+  src: url(assets/fonts/Pangram-Regular.otf) format("opentype");
+}
 
 * {
   box-sizing: border-box;
+  font-family: 'pangram', 'arial', sans-serif;
 }
 
 body,
@@ -17,7 +21,26 @@ body {
 }
 
 .btn {
+  letter-spacing: 0.1ch;
+  text-decoration: none;
   text-transform: none;
-  letter-spacing: .05ch;
-  font-weight: 500;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, #EB8840, #DA3148);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary.rounded {
+  border-radius: 500px !important;
+}
+
+.btn-secondary {
+  background: #da314846;
+  color: #DA3148;
+}
+
+.btn-secondary.rounded {
+  border-radius: 500px !important;
 }

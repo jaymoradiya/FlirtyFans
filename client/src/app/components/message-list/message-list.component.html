@@ -16,10 +16,10 @@
     <hr class="my-3">
   </div>
   <div class="message-view">
-    <div class="text-bolder message-container {{!isMyMessage(message) ? 'me-auto' : 'ms-auto' }}"
+    <div class="text-bolder message-container {{!isMyMessage(message) ? 'me-auto receive' : 'ms-auto' }}"
       *ngFor="let message of messages">
       <p class="text-muted mb-1 fs-6" *ngIf="!isMyMessage(message)">{{message.senderKnownAs}}</p>
-      <div class="message-content {{!isMyMessage(message) ? 'me-auto' : 'ms-auto' }}">
+      <div class="message-content {{!isMyMessage(message) ? 'me-auto receive' : 'ms-auto' }}">
         {{message.content}}
       </div>
       <p class="text-muted text-end mt-1 fs-6">{{message.dateSent | timeago}} {{message.dateRead ? ''

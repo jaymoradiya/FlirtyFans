@@ -1,4 +1,4 @@
-<div class="row m-0  px-1" *ngIf="member">
+<div class="row m-0 px-1" *ngIf="member">
   <img [src]="member.photoUrl" [alt]="member.knownAs" class="p-0 rounded d-inline" style="width: 50px;">
   <p class="col-{{ isLikeType ? '7' : '5' }} text-left pt-1 my-auto d-inline">
     <strong class="text-truncate">{{member.knownAs}}, {{member.age}}</strong>
@@ -13,5 +13,16 @@
     style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;  width: 3.5rem;"
     *ngIf="!isLikeType">
     Accept
+  </button>
+</div>
+<div class="row m-0 px-1" *ngIf="thread">
+  <img [src]="thread.userPhotoUrl" [alt]="thread.userKnownAs" class="p-0 rounded d-inline" style="width: 50px;">
+  <p class="col-5 text-left pt-1 my-auto">
+    <strong class="text-truncate">{{thread.userKnownAs}}</strong>
+    <span class="d-block text-muted" style="max-lines: 1;">{{thread.lastMessage.dateSent | timeago}}</span>
+  </p>
+  <button class="btn btn-secondary rounded btn-sm my-auto ms-auto"
+    style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;  width: 3.5rem; font-size: .5rem;">
+    Message
   </button>
 </div>

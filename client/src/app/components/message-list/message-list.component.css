@@ -33,6 +33,11 @@
   word-wrap: break-word;
 }
 
+.message-content.receive {
+  background: linear-gradient(to right, #EB8840, #DA3148);
+  color: white;
+}
+
 .message-field-wrapper {
   position: sticky;
   width: 100%;

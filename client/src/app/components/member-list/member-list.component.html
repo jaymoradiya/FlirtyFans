@@ -1,18 +1,16 @@
-<section class="py-3 px-5" *ngIf="members.length">
-
-  <div class="container">
-    <div class="row">
-      <div class="d-flex justify-content-between p-0 mb-3">
-        <div class="input-group w-50">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <div class="ms-auto my-auto">
-          <button class="btn btn-outline-primary" type="button"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: .75rem;">Upgrade
-            Now</button>
-        </div>
+<div class="container py-3 px-5">
+  <div class="row">
+    <div class="d-flex justify-content-between p-0 mb-3">
+      <div class="input-group w-50">
+        <input type="text" class="form-control" placeholder="Search">
       </div>
-      <div class="mt-3" *ngIf="userParams">
+      <div class="ms-auto my-auto">
+        <button class="btn btn-primary rounded" type="button"
+          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 2rem; --bs-btn-font-size: .5rem; font-size: .75rem;">Upgrade
+          Now</button>
+      </div>
+    </div>
+    <!-- <div class="mt-3" *ngIf="userParams">
         <form #form="ngForm" (ngSubmit)="loadMembers()" class="d-flex mb-3" autocomplete="off">
           <div class="d-flex mx-2">
             <label class="col-form-label">Age from:</label>
@@ -43,55 +41,52 @@
 
         </form>
 
-      </div>
-      <app-member-carousal [members]="members" class="col-12 p-0 m-0">
-        <div class="row" *ngIf="pagination">
+      </div> -->
+    <app-member-carousal class="col-12 p-0 m-0">
+      <!-- <div class="row" *ngIf="pagination">
           <div class="col-xs-12 col-12">
             <pagination [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemPerPage" [maxSize]="10"
               [(ngModel)]="pagination.currentPage" (pageChanged)="onPageChange($event)"></pagination>
           </div>
-        </div>
-      </app-member-carousal>
+        </div> -->
+    </app-member-carousal>
 
 
-      <div class="mt-3 d-flex justify-content-between p-0">
+    <div class="mt-3 d-flex justify-content-between p-0 m-0 col-12">
 
-        <div class="card col-4 p-3 m-0">
-          <div class="card-body p-0">
-            <div class="fs-5 fw-bold mt-2 mb-3">You may like</div>
-            <div *ngFor="let member of mayLikeMembers; index as i">
-              <hr *ngIf="i!=0">
-              <app-member-list-item [member]="member" [type]="memberListType.like"></app-member-list-item>
-            </div>
-          </div>
-        </div>
-
-        <div class="card col-4 p-3">
-          <div class="card-body p-0">
-            <div class="fs-5 fw-bold mt-2 mb-3">Chat Requests</div>
-            <div *ngFor="let member of chatRequests; index as i">
-              <hr *ngIf="i!=0">
-              <app-member-list-item [member]="member" [type]="memberListType.chatRequest"></app-member-list-item>
-            </div>
-          </div>
-        </div>
-
-        <div class="card col-3 p-3 mb-auto">
-          <div class="card-body p-2 text-center">
-            <div class="fs-3 fw-bold text-center lh-sm">Improve your matches</div>
-            <div class="text-center my-4 fw-medium">
-              if a man from the moon landed in your hometown. Would you do to entertain him?
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm">No</button>
-            <button type="button" class="btn btn-primary btn-sm"
-              style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: .75rem;">Yes</button>
-            <div class="text-center">
-              <button type="button" class="btn btn-secondary btn-sm  text-muted">skip</button>
-            </div>
-          </div>
+      <div class="card col-4 p-3 m-0">
+        <div class="fs-5 fw-bold mt-2 mb-3">You may like</div>
+        <div *ngFor="let member of mayLikeMembers; index as i">
+          <hr *ngIf="i!=0">
+          <app-member-list-item [data]="member" [type]="memberListType.like"></app-member-list-item>
         </div>
       </div>
 
+      <div class="card col-4 p-3">
+
+        <div class="fs-5 fw-bold mt-2 mb-3">Chat Requests</div>
+        <div *ngFor="let thread of messageThreads; index as i">
+          <hr *ngIf="i!=0">
+          <app-member-list-item [data]="thread" [type]="memberListType.chatRequest"></app-member-list-item>
+        </div>
+
+      </div>
+
+      <div class="card col-3 p-3 mb-auto">
+        <div class="card-body p-2 text-center">
+          <div class="fs-3 fw-bold text-center lh-sm">Improve your matches</div>
+          <div class="text-center my-4 fw-medium">
+            if a man from the moon landed in your hometown. Would you do to entertain him?
+          </div>
+          <button type="button" class="btn btn-sm">No</button>
+          <button type="button" class="btn btn-primary  rounded btn-sm"
+            style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: .75rem;">Yes</button>
+          <div class="text-center">
+            <button type="button" class="btn  btn-sm  text-muted">skip</button>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
-</section>
+</div>

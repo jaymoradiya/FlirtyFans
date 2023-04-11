@@ -2,17 +2,20 @@
   <div class="carousel-inner">
     <div class="carousel-item {{ i == 0 ? 'active' : '' }}" *ngFor="let member of carousalMembers; index as i">
       <div class="row text-dark">
-        <app-member-card class="col-3" [member]="members[i*4]"></app-member-card>
+        <app-member-card class="col-3" [member]="i*4 > members.length-1 ? dummyMember: members[i*4]"></app-member-card>
         <app-member-card class="col-3" [member]="members[i*4+1]"></app-member-card>
         <app-member-card class="col-3" [member]="members[i*4+2]"></app-member-card>
         <app-member-card class="col-3" [member]="members[i*4+3]"></app-member-card>
       </div>
     </div>
   </div>
-  <button class="carousel-control prev" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+  <button class="carousel-control prev" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev"
+    (click)="onPageChange((userParams?.pageNumber ?? 1) -1)" *ngIf="(userParams?.pageNumber ?? 0) >1">
     <i class="fa fa-angle-left"></i>
   </button>
-  <button type="button" class="carousel-control next" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+  <button type="button" class="carousel-control next" data-bs-target="#carouselExampleCaptions" data-bs-slide="next"
+    (click)="onPageChange((userParams?.pageNumber ?? 0) +1)"
+    *ngIf="(userParams?.pageNumber ?? 0 +1) < (pagination?.totalPages ?? 0)">
     <i class="fa fa-angle-right"></i>
   </button>
   <div class="mx-auto m-0 mt-2 p-0 ">

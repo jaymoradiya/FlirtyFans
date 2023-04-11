@@ -53,9 +53,9 @@ export class AuthService {
     const userString = localStorage.getItem('userData');
     if (!userString) return;
     const user = JSON.parse(userString);
-    // this.router.navigateByUrl('/members');
     this.setCurrentUser(user);
     this.currentUser.next(user);
+    this.router.navigateByUrl('/members');
   }
 
   logout() {
