@@ -8,24 +8,10 @@
       <form class="mt-4 mb-3 mx-2">
         <input type="text" class="form-control" placeholder="Search">
       </form>
-      <div class="m-2 p-3 row item-container rounded"
-        [class.active]="getOtherUserDetails(thread).id == selectedThreadUser?.id" *ngFor="let thread of threads"
-        (click)="selectThread(thread)">
-        <img [src]="getOtherUserDetails(thread).photoUrl" [alt]="getOtherUserDetails(thread).knownAs"
-          class="p-0 rounded d-inline" style="width: 50px;">
-        <p class="col-6 text-left pt-1 my-auto d-inline text-truncate">
-          <strong class="">{{getOtherUserDetails(thread).knownAs}}</strong>
-          <br>
-          <span class="fs-6 text-muted">{{thread.lastMessage.dateSent | timeago}}</span>
-        </p>
-        <span class="text-truncate text-muted mt-3 col-12 text-left m-0 p-0">
-          <span *ngIf="thread.lastMessage.senderId == thread.userId">You:</span>
-          {{thread.lastMessage.content}}
-        </span>
-
-      </div>
+      <app-thread-item *ngFor="let thread of threads" [thread]="thread"
+        [selected]="thread.otherUserId == selectedThreadUser?.id" (click)="selectThread(thread)"></app-thread-item>
     </div>
-    <div class="col-8 " *ngIf="selectedThreadUser">
+    <div class="col-8" *ngIf="selectedThreadUser">
       <app-message-list [recipientUser]="selectedThreadUser" [showNav]="true"></app-message-list>
     </div>
   </div>

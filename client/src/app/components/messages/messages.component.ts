@@ -38,7 +38,8 @@ export default class MessagesComponent implements OnInit {
     this.messageService.getThreads().subscribe({
       next: (res) => {
         this.threads = res.data;
-        if (this.threads.length > 0) this.selectThread(this.threads[0]);
+        if (this.threads.length > 0 && !this.selectedThreadUser)
+          this.selectThread(this.threads[0]);
       },
     });
   }
@@ -61,6 +62,5 @@ export default class MessagesComponent implements OnInit {
 
   selectThread(thread: Thread) {
     this.selectedThreadUser = this.getOtherUserDetails(thread);
-    console.log('from parent', this.selectedThreadUser);
   }
 }

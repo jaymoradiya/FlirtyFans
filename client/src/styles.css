@@ -4,6 +4,15 @@
   src: url(assets/fonts/Pangram-Regular.otf) format("opentype");
 }
 
+:root {
+  --primary-color: #DA3148;
+  --on-primary-color: #f4f2fc;
+  --secondary-color: #eb8840;
+  --on-secondary-color: #282828;
+  --gray-color: #dbdbdb;
+  --white-color: #FFF;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'pangram', 'arial', sans-serif;
@@ -27,8 +36,8 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(to right, #EB8840, #DA3148);
-  color: white;
+  background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+  color: var(--on-primary-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -37,8 +46,8 @@ body {
 }
 
 .btn-secondary {
-  background: #da314846;
-  color: #DA3148;
+  background: #da314847;
+  color: var(--primary-color);
 }
 
 .btn-secondary.rounded {

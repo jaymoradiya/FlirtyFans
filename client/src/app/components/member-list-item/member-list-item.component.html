@@ -19,7 +19,9 @@
   <img [src]="thread.userPhotoUrl" [alt]="thread.userKnownAs" class="p-0 rounded d-inline" style="width: 50px;">
   <p class="col-5 text-left pt-1 my-auto">
     <strong class="text-truncate">{{thread.userKnownAs}}</strong>
-    <span class="d-block text-muted" style="max-lines: 1;">{{thread.lastMessage.dateSent | timeago}}</span>
+
+    <span class="d-inline-block text-muted text-truncate" style="max-width: 175px;">
+      {{thread.id != thread.lastMessage.senderId ? "You:": ""}} {{thread.lastMessage.content}}</span>
   </p>
   <button class="btn btn-secondary rounded btn-sm my-auto ms-auto"
     style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;  width: 3.5rem; font-size: .5rem;">

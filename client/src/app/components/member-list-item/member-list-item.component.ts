@@ -27,6 +27,7 @@ export class MemberListItemComponent {
     const data = !this.isLikeType ? (this.data as Thread) : null;
     if (data) {
       return {
+        id: data.otherUserId,
         userKnownAs:
           data.otherUserId == data.lastMessage.senderId
             ? data.lastMessage.senderKnownAs

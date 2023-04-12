@@ -33,6 +33,7 @@ import { DatePickerComponent } from './shared/components/date-picker/date-picker
 import { TimeagoModule } from 'ngx-timeago';
 import MessagesComponent from './components/messages/messages.component';
 import { MessageListComponent } from './components/message-list/message-list.component';
+import { ThreadItemComponent } from './components/thread-item/thread-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { MessageListComponent } from './components/message-list/message-list.com
     InputFieldComponent,
     DatePickerComponent,
     MessageListComponent,
+    ThreadItemComponent,
   ],
   imports: [
     BrowserModule,

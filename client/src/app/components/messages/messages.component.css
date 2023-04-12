@@ -19,13 +19,3 @@
 .thread-container::-webkit-scrollbar {
   display: none;
 }
-
-.item-container {
-  background-color: #ffffff73;
-  cursor: pointer;
-}
-
-.item-container.active {
-  background-color: #fff;
-  transition: all .3s ease-in;
-}

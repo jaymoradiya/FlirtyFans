@@ -55,7 +55,7 @@ export class AuthService {
     const user = JSON.parse(userString);
     this.setCurrentUser(user);
     this.currentUser.next(user);
-    this.router.navigateByUrl('/members');
+    // this.router.navigateByUrl('/members');
   }
 
   logout() {

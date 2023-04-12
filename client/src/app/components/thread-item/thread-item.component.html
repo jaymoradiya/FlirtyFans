@@ -1,0 +1,12 @@
+<div class="m-2 p-3 row item-container rounded" [class.active]="selected" *ngIf="threadUser">
+  <img [src]="threadUser.photoUrl" [alt]="threadUser.knownAs" class="p-0 rounded d-inline" style="width: 50px;">
+  <p class="col-6 text-left pt-1 my-auto d-inline text-truncate">
+    <strong class="">{{threadUser.knownAs}}</strong>
+    <br>
+    <span class="fs-6 text-muted">{{threadUser.lastMessage.dateSent | timeago}}</span>
+  </p>
+  <div class="text-muted text-left text-truncate mt-3 m-0 p-0" style="max-width: 300px;">
+    <span *ngIf="threadUser.lastMessage.senderId != threadUser.id" class="me-1">You:</span>
+    <span>{{threadUser.lastMessage.content}}</span>
+  </div>
+</div>
