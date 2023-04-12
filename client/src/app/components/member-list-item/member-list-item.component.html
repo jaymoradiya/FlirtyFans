@@ -1,5 +1,6 @@
-<div class="row m-0 px-1" *ngIf="member">
-  <img [src]="member.photoUrl" [alt]="member.knownAs" class="p-0 rounded d-inline" style="width: 50px;">
+<div class="row m-0 px-1" *ngIf="member" style="cursor: pointer;">
+  <img [src]="member.photoUrl" [alt]="member.knownAs" class="p-0 rounded d-inline" style="width: 50px;"
+    [routerLink]="'/member/'+member.id">
   <p class="col-{{ isLikeType ? '7' : '5' }} text-left pt-1 my-auto d-inline">
     <strong class="text-truncate">{{member.knownAs}}, {{member.age}}</strong>
     <span class="d-block text-muted text-truncate">{{member.city}}</span>
@@ -15,15 +16,16 @@
     Accept
   </button>
 </div>
-<div class="row m-0 px-1" *ngIf="thread">
-  <img [src]="thread.userPhotoUrl" [alt]="thread.userKnownAs" class="p-0 rounded d-inline" style="width: 50px;">
+<div class="row m-0 px-1" *ngIf="thread" style="cursor: pointer;">
+  <img [src]="thread.userPhotoUrl" [alt]="thread.userKnownAs" class="p-0 rounded d-inline" style="width: 50px;"
+    [routerLink]="'/member/'+thread.id">
   <p class="col-5 text-left pt-1 my-auto">
-    <strong class="text-truncate">{{thread.userKnownAs}}</strong>
+    <strong class="text-truncate" [routerLink]="'/member/'+thread.id">{{thread.userKnownAs}}</strong>
 
-    <span class="d-inline-block text-muted text-truncate" style="max-width: 175px;">
+    <span class="d-block text-muted text-truncate" style="max-width: 175px;">
       {{thread.id != thread.lastMessage.senderId ? "You:": ""}} {{thread.lastMessage.content}}</span>
   </p>
-  <button class="btn btn-secondary rounded btn-sm my-auto ms-auto"
+  <button class="btn btn-secondary rounded btn-sm my-auto ms-auto" [routerLink]="'/messages/'+thread.id"
     style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;  width: 3.5rem; font-size: .5rem;">
     Message
   </button>

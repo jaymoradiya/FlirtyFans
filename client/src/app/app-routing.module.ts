@@ -13,6 +13,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { PreventUnsavedGuard } from './guards/prevent-unsaved.guard';
+import { MemberResolver } from './resolver/member.resolver';
 
 const routes: Routes = [
   {
@@ -34,9 +35,19 @@ const routes: Routes = [
     path: 'member/:id',
     component: MemberDetailsComponent,
     canActivate: [AuthGuard],
+    resolve: { member: MemberResolver },
   },
   { path: 'lists', component: ListsComponent, canActivate: [AuthGuard] },
-  { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
+  {
+    path: 'messages',
+    redirectTo: 'messages/0',
+    pathMatch: 'full',
+  },
+  {
+    path: 'messages/:id',
+    component: MessagesComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
 

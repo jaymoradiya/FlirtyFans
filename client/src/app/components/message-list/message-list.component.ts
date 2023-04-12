@@ -2,8 +2,10 @@ import {
   AfterViewInit,
   Component,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { Subscription, take } from 'rxjs';
 import { Message } from 'src/app/models/message.model';
@@ -17,13 +19,13 @@ import { MessageService } from 'src/app/services/message.service';
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css'],
 })
-export class MessageListComponent implements OnInit, OnDestroy {
+export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   recipientUser: any;
-  messages: Message[] | undefined;
-  messageSubscription: Subscription | undefined;
   @Input()
   showNav = false;
+  messages: Message[] | undefined;
+  messageSubscription: Subscription | undefined;
 
   user?: User;
   content: string = '';
@@ -38,7 +40,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.messageSubscription) this.messageSubscription?.unsubscribe();
-    this.messageService.stopHubConnection();
+    this.stopHubConnection();
   }
 
   ngOnInit(): void {
@@ -53,6 +55,23 @@ export class MessageListComponent implements OnInit, OnDestroy {
       },
     });
     this.loadMessages();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      if (
+        propName == 'recipientUser' &&
+        !changes['recipientUser'].firstChange
+      ) {
+        if (
+          changes['recipientUser'].currentValue['id'] !=
+          changes['recipientUser'].previousValue['id']
+        ) {
+          this.stopHubConnection();
+          this.loadMessages();
+        }
+      }
+    }
   }
 
   isMyMessage(message: Message) {
@@ -78,5 +97,10 @@ export class MessageListComponent implements OnInit, OnDestroy {
     if (this.pageNumber !== event.page) {
       this.pageNumber = event.page;
     }
+  }
+
+  private stopHubConnection() {
+    this.messageService.stopHubConnection();
+    this.messages = [];
   }
 }

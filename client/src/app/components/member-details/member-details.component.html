@@ -1,6 +1,6 @@
-<div class="row p-5 pt-4 member-details m-0" *ngIf="member">
+<div class="row p-5 pt-4 member-details m-0">
   <div class="col-4">
-    <div class="card">
+    <div class="card" *ngIf="member">
 
       <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
       <div class="card-body">
@@ -35,18 +35,18 @@
     </div>
   </div>
   <div class="col-8">
-    <tabset class="member-tabset">
-      <tab heading="About {{member.knownAs}}">
+    <tabset class="member-tabset" #memberTabs>
+      <tab heading="About {{member?.knownAs}}">
         <h4 class="mt-2">Descriptions</h4>
-        <p>{{member.introduction}}</p>
+        <p>{{member?.introduction}}</p>
         <h4>Looking for</h4>
-        <p>{{member.lookingFor}}</p>
+        <p>{{member?.lookingFor}}</p>
       </tab>
       <tab heading="Photos">
         <gallery [items]="getGalleryItem()!" class="mt-2"></gallery>
       </tab>
       <tab heading="Interests">
-        <p class="mt-2">{{member.interests}}</p>
+        <p class="mt-2">{{member?.interests}}</p>
       </tab>
       <tab heading="Messages">
         <app-message-list [recipientUser]="member"></app-message-list>

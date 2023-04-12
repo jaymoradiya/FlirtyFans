@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { take } from 'rxjs';
-import { Message } from 'src/app/models/message.model';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Pagination } from 'src/app/models/pagination.model';
 import { Thread } from 'src/app/models/thread.model';
 import { User } from 'src/app/models/user.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
@@ -20,6 +19,7 @@ export default class MessagesComponent implements OnInit {
         knownAs: string;
       }
     | undefined;
+  paramsUserId?: number;
   threads?: Thread[];
   user?: User;
   content: string = '';
@@ -28,7 +28,25 @@ export default class MessagesComponent implements OnInit {
   pageNumber = 1;
   pageSize = 40;
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {
+    this.paramsUserId = this.route.snapshot.params['id'];
+    if (this.paramsUserId) {
+      this.selectUserThread(this.paramsUserId);
+    }
+    this.route.params.subscribe({
+      next: (params) => {
+        this.paramsUserId = params['id'];
+        if (this.paramsUserId) {
+          this.selectUserThread(this.paramsUserId);
+        }
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.loadThreads();
@@ -38,8 +56,8 @@ export default class MessagesComponent implements OnInit {
     this.messageService.getThreads().subscribe({
       next: (res) => {
         this.threads = res.data;
-        if (this.threads.length > 0 && !this.selectedThreadUser)
-          this.selectThread(this.threads[0]);
+        if (!this.selectedThreadUser && this.paramsUserId)
+          this.selectUserThread(this.paramsUserId);
       },
     });
   }
@@ -60,7 +78,25 @@ export default class MessagesComponent implements OnInit {
     return users.find((u) => u.id === thread.otherUserId)!;
   }
 
+  selectUserThread(id: number) {
+    if (this.threads) {
+      let thread = this.threads.find((t) => t.otherUserId == id);
+      if (thread) this.selectThread(thread);
+      else {
+        this.toastr.error(`No previous conversation found with user id: ${id}`);
+      }
+    }
+  }
+
   selectThread(thread: Thread) {
     this.selectedThreadUser = this.getOtherUserDetails(thread);
+    if (this.paramsUserId && this.paramsUserId != thread.otherUserId) {
+      this.router.navigateByUrl(
+        this.router.url.replace(
+          this.paramsUserId.toString(),
+          thread.otherUserId.toString()
+        )
+      );
+    }
   }
 }

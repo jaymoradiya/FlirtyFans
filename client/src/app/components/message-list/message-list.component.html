@@ -3,13 +3,15 @@
     <div class="col-2">
       <img [src]="user.photoUrl" [alt]="user.knownAs" class="rounded-circle shadow border border-light" width="50px"
         height="50px">
-      <img [src]="recipientUser.photoUrl" alt="other user" class="rounded-circle shadow border border-light profile-img"
-        width="50px" height="50px">
+      <a [routerLink]="'/member/'+recipientUser.id" style="text-decoration: none;">
+        <img [src]="recipientUser.photoUrl" alt="other user"
+          class="rounded-circle shadow border border-light profile-img" width="50px" height="50px">
+      </a>
     </div>
     <div class="col-10  my-auto p-0 row text-left">
       <div class="fs-4 fw-600 col-12 align-middle p-0 m-0">{{user.knownAs}},{{"
         "+recipientUser.knownAs}}</div>
-      <div class="text-muted fs-6 col-12  p-0 m-0">
+      <div class="text-muted fs-6 col-12  p-0 m-0" *ngIf="messages.length">
         {{messages[messages.length-1].dateSent | timeago}}
       </div>
     </div>
@@ -26,14 +28,15 @@
         : '(unread)'}}</p>
     </div>
   </div>
-  <form class="form message-field-wrapper m-0" #messageForm="ngForm" (ngSubmit)="sendMessage()">
+  <form class="form message-field-wrapper m-0" #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
     <div class="d-flex justify-content-between p-0">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" name="content" [(ngModel)]="content">
+        <input type="text" class="form-control" placeholder="Write message here..." name="content"
+          [(ngModel)]="content">
       </div>
       <div class="mx-2 ms-2">
-        <button class="btn btn-outline-primary text-dark" type="submit">
-          send
+        <button class="btn btn-outline-primary" type="submit">
+          <i class="fa fa-paper-plane"></i>
         </button>
       </div>
     </div>

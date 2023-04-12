@@ -12,7 +12,8 @@
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i
             class="fa fa-heart"></i></button>
       <li class="list-inline-item">
-        <button class="btn btn-outline-primary btn-sm"
+        <button class="btn btn-outline-primary btn-sm" routerLink="/member/{{member.id}}"
+          [queryParams]="{tab: 'messages'}"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i
             class="fa fa-message"></i></button>
     </ul>
