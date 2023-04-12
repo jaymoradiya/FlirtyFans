@@ -52,19 +52,25 @@
     </app-member-carousal>
 
 
-    <div class="mt-3 d-flex justify-content-between p-0 m-0 col-12">
+    <div class="mt-3 d-flex justify-content-between p-0 m-0 col-12  ">
 
-      <div class="card col-4 p-3 m-0">
-        <div class="fs-5 fw-bold mt-2 mb-3">You may like</div>
+      <div class="card col-4 p-3 m-0 mb-auto" *ngIf="mayLikeMembers.length">
+        <div class="fs-5 fw-bold mt-2 mb-3 d-flex justify-content-between">
+          You may like
+          <a class="fs-6 fw-normal text-muted text-decoration-none" routerLink="/lists">see all</a>
+        </div>
         <div *ngFor="let member of mayLikeMembers; index as i">
           <hr *ngIf="i!=0">
           <app-member-list-item [data]="member" [type]="memberListType.like"></app-member-list-item>
         </div>
       </div>
 
-      <div class="card col-4 p-3">
-
-        <div class="fs-5 fw-bold mt-2 mb-3">Recent Conversations</div>
+      <div class="card col-4 p-3 mb-auto" *ngIf="messageThreads.length">
+        <div class="fs-5 fw-bold mt-2 mb-3 d-flex justify-content-between">
+          <span>Recent Conversations</span>
+          <a class="fs-6 fw-normal text-muted text-decoration-none"
+            [routerLink]="'/messages/'+messageThreads[0].otherUserId">see all</a>
+        </div>
         <div *ngFor="let thread of messageThreads; index as i">
           <hr *ngIf="i!=0">
           <app-member-list-item [data]="thread" [type]="memberListType.chatRequest"></app-member-list-item>
@@ -72,7 +78,7 @@
 
       </div>
 
-      <div class="card col-3 p-3 mb-auto">
+      <div class="card col-3 p-3 mb-auto" *ngIf="mayLikeMembers.length && messageThreads.length">
         <div class="card-body p-2 text-center">
           <div class="fs-3 fw-bold text-center lh-sm">Improve your matches</div>
           <div class="text-center my-4 fw-medium">

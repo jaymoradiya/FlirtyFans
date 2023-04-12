@@ -12,7 +12,10 @@
 }
 
 .nav-link.nav-active {
-  color: #F11D40;
+  background-clip: border-box;
+  background: -webkit-linear-gradient(bottom, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   transition: all 0.3s ease-in-out;
 }
 

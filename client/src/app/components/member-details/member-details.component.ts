@@ -72,4 +72,19 @@ export class MemberDetailsComponent implements OnInit {
         (t) => t.heading?.toLowerCase() == tab.toLowerCase()
       )!.active = true;
   }
+
+  addLike() {
+    this.userService.addLike(this.member!.id!).subscribe({
+      next: (user) => {
+        console.log(user);
+      },
+    });
+  }
+
+  goToMessages() {
+    this.router.navigate([], {
+      queryParams: { tab: 'messages' },
+      relativeTo: this.route,
+    });
+  }
 }

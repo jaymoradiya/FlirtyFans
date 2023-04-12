@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Subscription, take } from 'rxjs';
 import { Message } from 'src/app/models/message.model';
@@ -25,6 +26,8 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   showNav = false;
   messages: Message[] | undefined;
+  @ViewChild('message-view')
+  messageView: HTMLElement | undefined;
   messageSubscription: Subscription | undefined;
 
   user?: User;
@@ -47,6 +50,8 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
     this.messageSubscription = this.messageService.messageThread$.subscribe({
       next: (messages) => {
         this.messages = messages;
+        if (this.messageView)
+          this.messageView.scrollTop = this.messageView.scrollHeight;
       },
     });
     this.authService.currentUser$.pipe(take(1)).subscribe({
@@ -90,6 +95,8 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
         .sendMessage(this.recipientUser.id, this.content)
         .then((val) => {
           this.content = '';
+          if (this.messageView)
+            this.messageView.scrollTop = this.messageView.scrollHeight;
         });
   }
 

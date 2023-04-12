@@ -1,36 +1,59 @@
-<div class="row p-5 pt-4 member-details m-0">
+<div class="row p-5 pt-5 member-details m-0">
   <div class="col-4">
-    <div class="card" *ngIf="member">
+    <div class="card " *ngIf="member">
 
-      <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
-      <div class="card-body">
-
+      <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
+        class="card-img-top  rounded-circle mx-auto mt-5 mb-4">
+      <div class="card-body text-center">
         <div>
-          <strong>Location:</strong>
-          <p>{{member.city}}, {{member.country}}</p>
+          <strong>{{member.knownAs}}, {{member.age}}</strong>
         </div>
         <div>
-          <strong>Age:</strong>
-          <p>{{member.age}}</p>
+          <span class="fs-6 text-muted text-decoration-none">
+            {{member.city}}, {{member.country}}
+          </span>
         </div>
-        <div>
-          <strong>Last Active:</strong>
-          <p>{{member.lastActive | timeago }}</p>
+        <p class="text-truncate mx-auto my-3" style="max-width: 250px;">
+          {{member.introduction}}
+        </p>
+        <div class="d-flex justify-content-evenly px-3 mb-3">
+          <button type="button" class="btn text-dark  px-2 py-2">
+            <i class="fab fa-facebook" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn icon-btn text-dark px-2 py-2">
+            <i class="fab fa-twitter "></i>
+          </button>
+          <button type="button" class="btn icon-btn text-dark px-2 py-2">
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn icon-btn text-dark px-2 py-2">
+            <i class="fab fa-tiktok" aria-hidden="true"></i>
+          </button>
         </div>
-        <div>
-          <strong>Member since:</strong>
-          <p>{{member.created | date}}</p>
+        <hr>
+        <div class="text-start me-auto mt-1">
+          <strong class="me-1">Email:</strong>
+          <span>{{member.email}}</span>
         </div>
+        <div class="text-start me-auto mt-1">
+          <strong class="me-1">Last Active:</strong>
+          <span>{{member.lastActive | timeago }}</span>
+        </div>
+        <div class="text-start me-auto mt-1">
+          <strong class="me-1">Member since:</strong>
+          <span>{{member.created | date}}</span>
+        </div>
+        <hr>
       </div>
-      <div class="card-footer">
-        <button type="button" class="btn btn-primary me-2">
+
+      <div class="card-footer d-flex justify-content-evenly mb-3">
+        <button type="button" class="btn rounded" (click)="addLike()">
           <i class="fa fa-heart"></i>
-          &nbsp;
-          Like</button>
-        <button type="button" class="btn btn-success">
+
+        </button>
+        <button type="button" class="btn rounded" (click)="goToMessages()">
           <i class="fa fa-message"></i>
-          &nbsp;
-          Message</button>
+        </button>
       </div>
     </div>
   </div>

@@ -2,10 +2,9 @@
   height: 100vh;
 }
 
-.img-thumbnail {
+.card-img-top {
   margin: 25px;
-  width: 85%;
-  height: 85%;
+  width: 45%;
 }
 
 .card {
@@ -20,4 +19,57 @@
   padding: 10px 15px;
   background-color: #fff;
   border-top: none;
+}
+
+.text-truncate-container {
+  width: 150px;
+}
+
+.text-truncate-container p {
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fab {
+  font-size: 1.2rem;
+}
+
+.fa-facebook:hover {
+  color: rgba(59, 89, 152, 1);
+}
+
+.fa-twitter:hover {
+  color: rgba(0, 172, 237, 1);
+}
+
+.fa-instagram:hover {
+  color: #fd5949;
+  transition: all .1s ease-in-out;
+}
+
+.fa-tiktok:hover {
+  color: #111111;
+  filter: drop-shadow(2px 0px 0px #FD3E3E) drop-shadow(-2px -2px 0px #4DE8F4);
+}
+
+.fa-heart:hover {
+  color: var(--primary-color);
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+    color: var(--secondary-color)
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }

@@ -41,15 +41,11 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.btn-primary.rounded {
+.btn.rounded {
   border-radius: 500px !important;
 }
 
 .btn-secondary {
   background: #da314847;
   color: var(--primary-color);
-}
-
-.btn-secondary.rounded {
-  border-radius: 500px !important;
 }

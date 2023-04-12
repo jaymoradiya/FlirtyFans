@@ -34,7 +34,7 @@
 }
 
 .message-content.receive {
-  background: linear-gradient(to right, #EB8840, #DA3148);
+  background: linear-gradient(-45deg, #EB8840, #DA3148);
   color: white;
 }
 
