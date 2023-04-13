@@ -82,10 +82,24 @@ namespace API.Controllers
         }
 
         [HttpGet("threads")]
-        public ActionResult<IEnumerable<ThreadDto>> GetThreads()
+        public ActionResult<PagedList<ThreadDto>> GetThreads([FromQuery] ThreadParams threadParams)
+        {
+            threadParams.UserId = User.GetUserId();
+            var threads =  _messageRepository.GetThreads(threadParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(threadParams.PageNumber, threadParams.PageSize, threads.TotalPages, threads.TotalCount));
+
+            return Ok(ApiResponseDto<IEnumerable<ThreadDto>>.Success(threads, "Fetch successfully"));
+
+        }
+
+        [HttpGet("search-thread")]
+        public async Task<ActionResult<IEnumerable<ThreadDto>>> SearchThreads([FromQuery] string query)
         {
             var currentUserId = User.GetUserId();
-            var threads = _messageRepository.GetThreads(currentUserId);
+            if (string.IsNullOrEmpty(query)) return BadRequest(ApiResponseDto<string>.Error("Please provide query string"));
+
+            var threads = await _messageRepository.SearchThread(currentUserId,query);
 
             return Ok(ApiResponseDto<IEnumerable<ThreadDto>>.Success(threads, "Fetch successfully"));
 
