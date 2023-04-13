@@ -82,7 +82,7 @@ namespace API.Data
 
         }
 
-        public IEnumerable<ThreadDto> GetThreads(int currentUserId)
+        public PagedList<ThreadDto> GetThreads(ThreadParams threadParams)
         {
             var query = _context.Messages.OrderByDescending(m => m.DateSent)
                 .Include(u => u.SenderUser).ThenInclude(u => u.Photos)
@@ -96,7 +96,7 @@ namespace API.Data
                     OtherUserId = m.RecipientId,
                     LastMessage = _mapper.Map<MessageDto>(m)
                 })
-                .Where(m => m.UserId == currentUserId);
+                .Where(m => m.UserId == threadParams.UserId);
 
             var threads = query1.AsEnumerable().Union(
                 query.Select(m => new ThreadDto
@@ -105,16 +105,50 @@ namespace API.Data
                     OtherUserId = m.SenderId,
                     LastMessage = _mapper.Map<MessageDto>(m)
                 })
-                .Where(m => m.UserId == currentUserId).AsEnumerable())
+                .Where(m => m.UserId == threadParams.UserId).AsEnumerable())
                 .OrderByDescending(m => m.LastMessage.DateSent)
-                .DistinctBy(m => m.OtherUserId);
+                .DistinctBy(m => m.OtherUserId)
+                .Skip((threadParams.PageNumber - 1) * threadParams.PageSize).Take(threadParams.PageSize);
 
+            return new PagedList<ThreadDto>(threads, 5, threadParams.PageNumber, threadParams.PageSize);
 
-            return threads.AsEnumerable();
+            //return new PagedList<ThreadDto>(threads, 5, threadParams.PageNumber, threadParams.PageSize);
+
         }
+        
+        
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public Task<IEnumerable<ThreadDto>> SearchThread(int currentUserId, string othreUserKnownAs)
+        {
+            var query = _context.Messages.OrderByDescending(m => m.DateSent)
+                .Include(u => u.SenderUser).ThenInclude(u => u.Photos)
+                .Include(u => u.RecipientUser).ThenInclude(u => u.Photos)
+                .Where( u => u.SenderId == currentUserId&&  u.RecipientKnownAs.ToLower().Contains(othreUserKnownAs.ToLower())  || u.RecipientId == currentUserId && u.SenderKnownAs.ToLower().Contains(othreUserKnownAs.ToLower()))
+                .AsQueryable();
+
+            var query1 = query
+                .Select(m => new ThreadDto
+                {
+                    UserId = m.SenderId,
+                    OtherUserId = m.RecipientId,
+                    LastMessage = _mapper.Map<MessageDto>(m)
+                })
+                .Where(m => m.UserId == currentUserId );
+
+            var threads = query1.AsEnumerable()
+                .Union(query.Select(m => new ThreadDto { 
+                    UserId = m.RecipientId, OtherUserId = m.SenderId, LastMessage = _mapper.Map<MessageDto>(m) 
+                })
+                .Where(m => m.UserId == currentUserId )
+                .AsEnumerable())
+                .OrderByDescending(m => m.LastMessage.DateSent)
+                .DistinctBy(m => m.OtherUserId);
+
+            return Task.FromResult(threads);
         }
 
         void IMessageRepository.AddGroup(Group group)

@@ -4,6 +4,8 @@ using API.Interfaces;
 using API.Services;
 using API.Helpers;
 using API.SignalR;
+using Microsoft.OpenApi.Models;
+using Microsoft.Net.Http.Headers;
 
 namespace API.Extensions
 {
@@ -28,8 +30,8 @@ namespace API.Extensions
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddSignalR();
             services.AddSingleton<PresenceTracker>();
+           
             return services;
-
         }
     }
 }

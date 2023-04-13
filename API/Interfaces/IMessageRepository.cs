@@ -17,7 +17,7 @@ namespace API.Interfaces
 
         Task<IEnumerable<MessageDto>> GetThreadMessages(int currentUserId, int recipientUserId);
 
-        IEnumerable<ThreadDto> GetThreads(int currentUserId);
+        PagedList<ThreadDto> GetThreads(ThreadParams threadParams);
 
         Task<bool> SaveAllAsync();
 
@@ -28,6 +28,9 @@ namespace API.Interfaces
         Task<Connection> GetConnection(string connectionId);
 
         Task<Group> GetMessageGroup(string groupName);
+
+        Task<IEnumerable<ThreadDto>> SearchThread(int currentUserId, string othreUserKnownAs);
+
 
     }
 }
