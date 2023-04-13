@@ -1,0 +1,27 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 320px;
+}
+
+.nav li {
+  float: left;
+  list-style: none;
+  text-align: center;
+
+  margin-right: 30px;
+  width: 150px;
+  line-height: 40px;
+  border-style: none;
+  border-radius: 40px;
+  margin: 5px 5px;
+  text-decoration: none;
+  color: black;
+  border: 1px solid black;
+  display: block;
+}
+
+.nav li.active {
+  border: none;
+  color: white;
+}
