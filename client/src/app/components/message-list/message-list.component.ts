@@ -50,8 +50,10 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
     this.messageSubscription = this.messageService.messageThread$.subscribe({
       next: (messages) => {
         this.messages = messages;
-        if (this.messageView)
+        if (this.messageView) {
+          
           this.messageView.scrollTop = this.messageView.scrollHeight;
+        }
       },
     });
     this.authService.currentUser$.pipe(take(1)).subscribe({

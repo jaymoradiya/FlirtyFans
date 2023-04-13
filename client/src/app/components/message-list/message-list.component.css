@@ -34,7 +34,7 @@
 }
 
 .message-content.receive {
-  background: linear-gradient(-45deg, #EB8840, #DA3148);
+  background: linear-gradient(-45deg, #eb8840, #da3148);
   color: white;
 }
 
@@ -53,7 +53,6 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 
 .message-view::-webkit-scrollbar {
   display: none;
