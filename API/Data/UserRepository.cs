@@ -8,6 +8,7 @@ using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +28,7 @@ namespace API.Data
         {
             return await _context.Users
             .Include(u => u.Photos)
+            .Include(u => u.Contacts)
             .SingleOrDefaultAsync(u => u.Id == id);
         }
 
@@ -84,6 +86,17 @@ namespace API.Data
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider),
                 userParams.PageNumber,
                 userParams.PageSize);
+        }
+
+        public  async Task<List<MemberDto>> SearchUserAsync(int currentUserId, string query)
+        {
+            var users =  await _context.Users
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                .Where(u => u.KnownAs.ToLower().Contains(query.ToLower()) && u.Id != currentUserId)
+                .ToListAsync();
+
+            return users;
+            
         }
     }
 }

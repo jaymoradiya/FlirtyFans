@@ -252,5 +252,20 @@ namespace API.Controllers
             });
         }
 
+
+        [HttpGet("search")]
+        public async Task<ActionResult<ApiResponseDto<List<MemberDto>>>> SearchUser([FromQuery] string query)
+        {
+            if (string.IsNullOrWhiteSpace(query)) return BadRequest(ApiResponseDto<string>.Error("please provide query string"));
+
+            var userId = User.GetUserId();
+
+            var users = await _userRepository.SearchUserAsync(userId, query);
+
+            if (users == null) return BadRequest(ApiResponseDto<string>.Error("No User found"));
+
+            return Ok(ApiResponseDto<List<MemberDto>>.Success(users,"fetch successfully"));
+        }
+
     }
 }

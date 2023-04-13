@@ -30,6 +30,7 @@ namespace API.Extensions
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddSignalR();
             services.AddSingleton<PresenceTracker>();
+            services.AddScoped<IContactRepository, ContactRepository>();
            
             return services;
         }
