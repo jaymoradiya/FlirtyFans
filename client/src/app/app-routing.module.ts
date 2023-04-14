@@ -14,6 +14,7 @@ import { ServerErrorComponent } from './shared/components/server-error/server-er
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { PreventUnsavedGuard } from './guards/prevent-unsaved.guard';
 import { MemberResolver } from './resolver/member.resolver';
+import { HomePageComponent } from './landing-page/home-page/home-page.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     component: HomeComponent,
     pathMatch: 'full',
   },
+  { path: 'home', component: HomePageComponent },
   { path: 'auth', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: 'auth/:type', component: AuthComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

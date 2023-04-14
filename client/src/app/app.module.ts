@@ -34,6 +34,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import MessagesComponent from './components/messages/messages.component';
 import { MessageListComponent } from './components/message-list/message-list.component';
 import { ThreadItemComponent } from './components/thread-item/thread-item.component';
+import { HomePageComponent } from './landing-page/home-page/home-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { ThreadItemComponent } from './components/thread-item/thread-item.compon
     DatePickerComponent,
     MessageListComponent,
     ThreadItemComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,

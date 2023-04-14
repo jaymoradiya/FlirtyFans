@@ -1,0 +1,110 @@
+.home {
+  max-height: 100vh;
+}
+.about {
+  max-height: 100vh;
+  margin-top: 100px;
+}
+
+.card-about {
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.22);
+
+  width: 180px;
+  border: none;
+  line-height: 1;
+  color: white;
+  margin-top: -100px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  margin-left: 9px;
+}
+.heart {
+  background-color: white;
+  border-radius: 50%;
+  padding: 3px;
+
+  color: #fd5949;
+}
+
+.card-img-top {
+  height: 250px;
+  width: 200px;
+  border-radius: 5%;
+}
+
+.new-profiles {
+  margin: 20px 10px;
+  padding-right: 2px;
+}
+.profile-1 {
+  margin-left: 0px;
+  margin-right: 20px;
+}
+.profile-2 {
+  margin-right: 20px;
+  margin-top: 50px;
+}
+.profile-3 {
+  margin-right: 20px;
+}
+.profile-4 {
+  margin-right: 20px;
+}
+.profile-5 {
+  margin-right: 20px;
+  margin-top: 50px;
+}
+.home-details {
+  margin-top: 100px;
+}
+
+.services {
+  height: 100vh;
+}
+.services-details {
+  margin-top: 100px;
+}
+
+.text {
+  font-size: 35px;
+  line-height: 1.4;
+  font-weight: 900;
+  max-width: 220px;
+}
+.home-para {
+  max-width: 250px;
+  line-height: 1.5;
+}
+.row .btn {
+  width: 150px;
+  border-radius: 50px;
+  margin-top: 7px;
+}
+.icons {
+  margin-left: -15px;
+}
+.fa-facebook:hover {
+  color: rgba(59, 89, 152, 1);
+}
+
+.fa-twitter:hover {
+  color: rgba(0, 172, 237, 1);
+}
+
+.fa-instagram:hover {
+  color: #fd5949;
+  transition: all 0.1s ease-in-out;
+}
+
+.fa-tiktok:hover {
+  color: #111111;
+  filter: drop-shadow(2px 0px 0px #fd3e3e) drop-shadow(-2px -2px 0px #4de8f4);
+}
+
+
+.card-about{
+  flex-direction: row;
+}
+
+
