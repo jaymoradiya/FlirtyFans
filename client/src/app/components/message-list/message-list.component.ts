@@ -1,6 +1,9 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  ElementRef,
   Input,
   OnChanges,
   OnDestroy,
@@ -16,6 +19,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-message-list',
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css'],
@@ -25,9 +29,10 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
   recipientUser: any;
   @Input()
   showNav = false;
+  @ViewChild('scrollMe')
+  chatView?: ElementRef;
+
   messages: Message[] | undefined;
-  @ViewChild('message-view')
-  messageView: HTMLElement | undefined;
   messageSubscription: Subscription | undefined;
 
   user?: User;
@@ -38,7 +43,8 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private messageService: MessageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private ref: ChangeDetectorRef
   ) {}
 
   ngOnDestroy(): void {
@@ -50,10 +56,7 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
     this.messageSubscription = this.messageService.messageThread$.subscribe({
       next: (messages) => {
         this.messages = messages;
-        if (this.messageView) {
-          
-          this.messageView.scrollTop = this.messageView.scrollHeight;
-        }
+        this.ref.detectChanges();
       },
     });
     this.authService.currentUser$.pipe(take(1)).subscribe({
@@ -97,8 +100,6 @@ export class MessageListComponent implements OnInit, OnDestroy, OnChanges {
         .sendMessage(this.recipientUser.id, this.content)
         .then((val) => {
           this.content = '';
-          if (this.messageView)
-            this.messageView.scrollTop = this.messageView.scrollHeight;
         });
   }
 
